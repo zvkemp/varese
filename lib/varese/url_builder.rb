@@ -10,7 +10,7 @@ module Varese
     end
 
     def to_url
-      "#{base_url}/data/#{year}/#{dataset}"
+      validate_and_build_url
     end
 
     def to_s
@@ -21,12 +21,16 @@ module Varese
       to_url
     end
 
-    def validate
-
-    end
-
-
     private
+
+      def validate_and_build_url
+        raise InvalidURLError unless dataset && year
+        return build_url
+      end
+
+      def build_url
+        "#{base_url}/data/#{year}/#{dataset}"
+      end
 
       def builder_option_acs(n)
         @dataset = "acs#{n}"
@@ -43,5 +47,8 @@ module Varese
       def base_url
         'http://api.census.gov'
       end
+  end
+
+  class InvalidURLError < StandardError
   end
 end

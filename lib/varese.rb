@@ -4,4 +4,5 @@ module Varese
   # Your code goes here...
   require 'varese/datasets'
   require 'varese/url_builder'
+  require 'varese/api'
 end
