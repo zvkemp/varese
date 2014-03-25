@@ -26,6 +26,12 @@ describe Varese::CensusData::Dataset do
     describe "meta" do
       specify { dataset.geography.must_be_instance_of Varese::CensusData::GeographyMeta }
       specify { dataset.variables.must_be_instance_of Varese::CensusData::VariableMetaSet }
+      specify do
+        age = dataset.variables.search('age')
+        age.must_be_instance_of Array
+        puts age.last.inspect
+      end
+      # specify { dataset.variables.search('age').must_be_instance_of Array }
     end
   end
 end

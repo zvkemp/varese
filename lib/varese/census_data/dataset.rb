@@ -56,6 +56,23 @@ module Varese
           by_concept[v.concept] << v if v.concept
         end
       end
+
+      # Simple case insensitive matching.
+      def search_labels(terms)
+        regex = Regexp.new(terms, true)
+        by_label.select {|label, _| label.match(regex) }.values.flatten.uniq
+      end
+
+      def search_guids(terms)
+        by_guid.select {|guid, _| guid[terms] }.values
+      end
+
+      def search_concepts(terms)
+      end
+
+      def count
+        by_guid.count
+      end
     end
 
     class VariableMeta < Meta
