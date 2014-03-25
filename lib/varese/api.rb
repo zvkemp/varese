@@ -1,5 +1,7 @@
 require 'forwardable'
 require 'net/http'
+require 'json'
+require 'open-uri' 
 
 module Varese
   class AccessToken
@@ -10,8 +12,10 @@ module Varese
     end
 
     def get(url)
-      Net::HTTP.get_response(URI.parse url)
+      #Net::HTTP.get_response(URI.parse url)
+      open(URI.parse(url)).read
     end
+
   end
 
   class API
@@ -25,12 +29,25 @@ module Varese
     end
 
     def get(options = {})
-      access_token.get(url(options)).response
+      json { access_token.get(url(options)) }
     end
 
+    def datasets
+      raw_datasets.map {|ds| Varese::CensusData::Dataset.new(ds, self) }
+    end
+
+
     private
+      def raw_datasets
+        get(Varese::URLBuilder.new.dataset_meta_url)
+      end
+
+      def json(&block)
+        JSON.parse yield
+      end
 
       def url(options)
+        return options if options.is_a? String
         Varese::URLBuilder.new(url_defaults.merge(options).merge({ key: access_token.key }))
       end
   end

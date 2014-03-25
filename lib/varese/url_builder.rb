@@ -2,7 +2,7 @@ module Varese
   class URLBuilder
     attr_reader :year, :dataset, :query
 
-    def initialize(options)
+    def initialize(options = {})
       @query = options.delete(:query)
       @key = options.delete(:key)
       options.each do |key, value|
@@ -22,6 +22,11 @@ module Varese
       to_url
     end
 
+    def dataset_meta_url
+      metadata_url
+    end
+
+
     private
 
       def validate_and_build_url
@@ -29,8 +34,12 @@ module Varese
         return build_url
       end
 
+      def metadata_url
+        "#{base_url}/data.json"
+      end
+
       def build_url
-        str = "#{base_url}/data/#{year}/#{dataset}?#{query_string}"
+        str = "#{base_url}/data/#{year}/#{dataset}"
         str << "?#{query_string}" if query
         str
       end
@@ -52,9 +61,15 @@ module Varese
       end
 
       def query_string
-        (query || {}).merge({ key: @key }).map do |key, value|
+        (query || {}).merge(api_key_hash).map do |key, value|
           "#{key}=#{value}"
         end.join("&")
+      end
+
+      def api_key_hash
+        {}.tap do |hash|
+          hash[:key] = @key if @key
+        end
       end
   end
 
