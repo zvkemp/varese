@@ -4,6 +4,7 @@ module Varese
 
     def initialize(options)
       @query = options.delete(:query)
+      @key = options.delete(:key)
       options.each do |key, value|
         send("builder_option_#{key}", value)
       end
@@ -29,7 +30,9 @@ module Varese
       end
 
       def build_url
-        "#{base_url}/data/#{year}/#{dataset}"
+        str = "#{base_url}/data/#{year}/#{dataset}?#{query_string}"
+        str << "?#{query_string}" if query
+        str
       end
 
       def builder_option_acs(n)
@@ -46,6 +49,12 @@ module Varese
 
       def base_url
         'http://api.census.gov'
+      end
+
+      def query_string
+        (query || {}).merge({ key: @key }).map do |key, value|
+          "#{key}=#{value}"
+        end.join("&")
       end
   end
 
