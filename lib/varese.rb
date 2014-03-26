@@ -6,4 +6,5 @@ module Varese
   require 'varese/url_builder'
   require 'varese/api'
   require 'varese/census_data/dataset'
+  require 'varese/fips'
 end
