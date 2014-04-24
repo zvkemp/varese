@@ -1,90 +1,5 @@
 module Varese
   module CensusData
-    class Base
-      def initialize(raw)
-        @raw = raw
-      end
-
-      class << self
-        def data_attribute(sym, data_key, *transformation_methods)
-          define_method sym do 
-            transformation_methods.inject(raw[data_key]) do |data, transformation_sym|
-              data.send transformation_sym
-            end
-          end
-        end
-
-        def meta_attribute(sym, data_key, *transformation_methods)
-          define_method sym do
-            transformation_methods.inject(meta.raw[data_key]) do |data, transformation_sym|
-              data.send transformation_sym
-            end
-          end
-        end
-      end
-
-      def raw
-        @raw
-      end
-    end
-
-    class Meta < Base
-    end
-
-    class GeographyMeta < Meta
-      attr_reader :geographies
-      def initialize(raw)
-        @geographies = {}.tap do |hash|
-          raw['fips'].each do |geo|
-            hash[geo['name']] = Array(geo['requires'])
-          end
-        end
-      end
-    end
-
-    class VariableMetaSet < Meta
-      attr_reader :by_guid, :by_label, :by_concept
-      def initialize(raw)
-        @by_guid    = {}
-        @by_label   = Hash.new {|h,k| h[k] = [] }
-        @by_concept = Hash.new {|h,k| h[k] = [] }
-
-        raw["variables"].each do |guid, data|
-          v = VariableMeta.new(guid, data)
-          by_guid[v.guid] = v
-          by_label[v.label] << v if v.label
-          by_concept[v.concept] << v if v.concept
-        end
-      end
-
-      # Simple case insensitive matching.
-      def search_labels(terms)
-        regex = Regexp.new(terms, true)
-        by_label.select {|label, _| label.match(regex) }.values.flatten.uniq
-      end
-
-      def search_guids(terms)
-        by_guid.select {|guid, _| guid[terms] }.values
-      end
-
-      def search_concepts(terms)
-      end
-
-      def count
-        by_guid.count
-      end
-    end
-
-    class VariableMeta < Meta
-      attr_reader :guid, :label, :concept
-
-      def initialize(guid, data)
-        @guid = guid
-        @label = data["label"]
-        @concept = data["concept"]
-      end
-    end
-
     class Dataset < Base
       attr_reader :meta, :api
       def initialize(raw, api)
@@ -115,10 +30,63 @@ module Varese
       def tags
       end
 
+      def inspect
+        DatasetInspector.new(self).present
+      end
+
       private
 
         def auxilliary_metadata(key, klass = Meta)
           klass.new(api.get(link(key)))
+        end
+
+    end
+
+    class DatasetInspector
+      attr_reader :dataset
+      def initialize(dataset)
+        @dataset = dataset
+      end
+
+      def present
+        "#{head} #{variables} #{tail}"
+      end
+
+      private
+
+        def head
+          "#<Varese::CensusData::Dataset"
+        end
+
+        def variables
+          "".tap do |str|
+            dataset.instance_variables.each do |ivar|
+              str << "#{ivar}="
+              str << variable(ivar)
+              str << " "
+            end
+          end
+        end
+
+        def variable(variable_name)
+          dataset.instance_variable_get(variable_name).tap do |var|
+            if abbreviate?(variable_name)
+              return "#<#{var.class.to_s} ...>"
+            else
+              return var.inspect
+            end
+          end
+        end
+
+        def tail
+          ">"
+        end
+
+        def abbreviate?(variable_name)
+          {
+            :@api => false,
+            :@meta => false
+          }.fetch(variable_name, true)
         end
     end
   end

@@ -24,14 +24,22 @@ describe Varese::CensusData::Dataset do
     end
 
     describe "meta" do
-      specify { dataset.geography.must_be_instance_of Varese::CensusData::GeographyMeta }
+      specify { dataset.geography.must_be_instance_of Varese::CensusData::GeographyMeta   }
       specify { dataset.variables.must_be_instance_of Varese::CensusData::VariableMetaSet }
-      specify do
-        age = dataset.variables.search('age')
+
+      specify "searching" do
+        age = dataset.variables.search_labels('age')
         age.must_be_instance_of Array
-        puts age.last.inspect
+        puts age.count.inspect
       end
       # specify { dataset.variables.search('age').must_be_instance_of Array }
     end
   end
+
+  describe "acs5 2012" do
+    let(:dataset){ api.datasets.find {|ds| ds.identifier == "2012acs5" }}
+    specify { dataset.must_be_instance_of Varese::CensusData::Dataset }
+    specify { dataset.variables.must_be_instance_of Varese::CensusData::VariableMetaSet }
+    specify { puts dataset.variables.by_concept.to_a[2].inspect }
+  end 
 end

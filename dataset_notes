@@ -1,0 +1,21 @@
+http://www2.census.gov/acs2012_5yr/summaryfile/2008-2012_ACSSF_By_State_All_Tables/
+  "[state]_All_Geographies_Tracts_Block_Groups_Only.zip"
+    | (242 files)
+    | 120  "e20125ak{SEQ 0001..0120}000.txt"
+    |  |- "estimate" file
+    |  |- first 6 columns are standard: (page 14 in Tech Doc)
+    |     | FILEID   = File Identification
+    |     | FILETYPE = File type 
+    |     | STUSAB   = State US Abbreviation (USPS)
+    |     | CHARITER = Character Iteration
+    |     | SEQUENCE = Sequence Number
+    |     | LOGRECNO = Logical Record Number (links the estimate to a specific geographical area)
+    |     
+    | 120  "m20125ak{0001000...0120000}.txt"
+    |  |- "margin of error" file
+    |  |- first 6 columns are standard (same as "e" type file)
+    | 1    "g20125ak.txt"
+    | 1    "g20125ak.csv"
+  "Sequence_Number_and_Table_Number_Lookup.csv"
+    
+
