@@ -30,7 +30,6 @@ describe Varese::CensusData::Dataset do
       specify "searching" do
         age = dataset.variables.search_labels('age')
         age.must_be_instance_of Array
-        puts age.count.inspect
       end
       # specify { dataset.variables.search('age').must_be_instance_of Array }
     end
@@ -40,6 +39,5 @@ describe Varese::CensusData::Dataset do
     let(:dataset){ api.datasets.find {|ds| ds.identifier == "2012acs5" }}
     specify { dataset.must_be_instance_of Varese::CensusData::Dataset }
     specify { dataset.variables.must_be_instance_of Varese::CensusData::VariableMetaSet }
-    specify { puts dataset.variables.by_concept.to_a[2].inspect }
   end 
 end
