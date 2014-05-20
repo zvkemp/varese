@@ -18,3 +18,4 @@ tmp
 api_key*
 *DS_Store
 fixtures/cassettes/*
+fixtures/*csv
