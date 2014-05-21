@@ -1,6 +1,12 @@
 # Varese
 
-TODO: Write a gem description
+### A Ruby interface to the US Census API.
+
+**This is currently an early-stage project and is not ready for production.** Contributions welcome.
+
+#### Varese?
+
+Yes: [http://en.wikipedia.org/wiki/Am%C3%A9riques](http://en.wikipedia.org/wiki/Am%C3%A9riques)
 
 ## Installation
 
