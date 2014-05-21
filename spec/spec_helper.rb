@@ -10,7 +10,6 @@ VCR.configure do |c|
   c.hook_into :webmock
 end
 
-
 module Varese
   class MockAccessToken
     API_KEY = File.read('fixtures/api_key').strip
@@ -35,7 +34,4 @@ module Varese
       end
   end
 end
-
-
-
 

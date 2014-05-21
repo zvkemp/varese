@@ -75,4 +75,17 @@ module Varese
 
   class InvalidURLError < StandardError
   end
+
+  class GeographicQuery
+    def initialize(options)
+      @options = options
+    end
+
+    def to_str
+      raise GeographicQueryError
+    end
+  end
+
+  class GeographicQueryError < StandardError
+  end
 end

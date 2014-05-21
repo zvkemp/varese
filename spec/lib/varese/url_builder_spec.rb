@@ -1,8 +1,6 @@
 require_relative '../spec_helper'
 
 describe Varese::URLBuilder do
-
-
   [
     [{ acs: 5, year: 2012 }, 'http://api.census.gov/data/2012/acs5', 'acs5'],
     [{ acs: 1, year: 2010 }, 'http://api.census.gov/data/2010/acs1', 'acs1'],
@@ -24,6 +22,20 @@ describe Varese::URLBuilder do
         builder = Varese::URLBuilder.new(options)
         ->{ builder.to_str }.must_raise Varese::InvalidURLError
       end
+    end
+  end
+
+  describe Varese::GeographicQuery do
+    [
+      [{ tract: "*", county: "*", state: "06" }, "for=tract:*&in=state:06+county:*", "tract in state and county"]
+    ].each do |hash, expectation, description|
+      specify description do
+        Varese::GeographicQuery.new(hash).to_str.must_equal expectation
+      end
+    end
+
+    specify "cannot specify county without state" do
+      ->{ Varese::GeographicQuery.new(tract: "*", county: "001").to_str }.must_raise Varese::GeographicQueryError
     end
   end
 end
