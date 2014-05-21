@@ -41,7 +41,7 @@ describe Varese::CensusData::Dataset do
 
     describe "retrieving data by geography" do
       specify do
-        raw = dataset.query(datapoint: "B01001_001E", geography: { county: "*", state: "06" })
+        raw = dataset.query(acs: 5, year: 2012, query: { get: "B01001_001E", for: "county:*", in: "state:06"} )
         raw.must_equal 1
       end
     end

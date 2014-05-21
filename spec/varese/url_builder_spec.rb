@@ -27,10 +27,10 @@ describe Varese::URLBuilder do
 
   describe Varese::GeographicQuery do
     [
-      [{ tract: "*", county: "*", state: "06" }, "for=tract:*&in=state:06+county:*", "tract in state and county"]
+      [{ 'tract' => "*", 'county' => "*", 'state' => "06" }, "for=tract:*&in=state:06+county:*", "tract in state and county"]
     ].each do |hash, expectation, description|
       specify description do
-        Varese::GeographicQuery.new(hash).to_str.must_equal expectation
+        Varese::GeographicQuery.new(hash).to_hash.must_equal expectation
       end
     end
 

@@ -41,6 +41,7 @@ module Varese
       def build_url
         str = "#{base_url}/data/#{year}/#{dataset}"
         str << "?#{query_string}" if query
+        puts str.inspect
         str
       end
 
@@ -77,12 +78,39 @@ module Varese
   end
 
   class GeographicQuery
+    HIERARCHY = [
+      'block group',
+      'tract',
+      'county',
+      'state'
+    ]
+
+    attr_reader :options
+
     def initialize(options)
       @options = options
     end
 
+    def apply_to(hash)
+      hash.merge!(to_hash)
+    end
+
+    def to_hash
+      { for: for_option, in: in_option }.select {|k,v| v }
+    end
+
     def to_str
       raise GeographicQueryError
+    end
+
+    private
+
+    def for_option
+      f = HIERARCHY.find {|h| options[h] }
+      "#{f}:#{options[f]}"
+    end
+
+    def in_option
     end
   end
 

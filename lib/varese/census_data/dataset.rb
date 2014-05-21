@@ -14,6 +14,7 @@ module Varese
       meta_attribute :identifier  , "identifier"
       meta_attribute :spatial     , "spatial"
       meta_attribute :temporal    , "temporal"      , :to_i
+      meta_attribute :title       , "title"
 
       def link(sym)
         meta.raw["c_#{sym}Link"]
@@ -25,6 +26,10 @@ module Varese
         end
       end
 
+      # Geography provides a hash of geography types (as strings) poiting to
+      # geographic dependencies.
+      # Not all dependencies are explicitly required, for example
+      # in `'tract' => ['state', 'county']`, for=tract:*in=state:06 is a valid query.
       def geography
         @geography ||= auxilliary_metadata(:geography, GeographyMeta)
       end
@@ -55,7 +60,8 @@ module Varese
       end
 
       def query(options)
-        transform_query_options(options)
+        api.get(options)
+        #transform_query_options(options)
       end
 
       private
@@ -63,7 +69,7 @@ module Varese
       def transform_query_options(options)
         {}.tap do |query_options|
           query_options[:get] = options.fetch(:datapoint){ options.fetch(:get) }
-          query_options[:geography] = ""
+          Varese::GeographicQuery.new(options[:geometry]).apply_to query_options
         end
       end
 
