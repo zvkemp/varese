@@ -8,7 +8,7 @@ module Varese
       end
 
       meta_attribute :vintage     , "c_vintage"
-      meta_attribute :name        , "c_dataset"     , :first
+      meta_attribute :name        , "c_dataset"     , ->(v){ v.join(" ") }
       meta_attribute :aggregate?  , "c_isAggregate"
       meta_attribute :description , "description"
       meta_attribute :identifier  , "identifier"
@@ -31,9 +31,13 @@ module Varese
       end
 
       def inspect
-        "#<Varese::CensusData::Dataset #{identifier} #{name} [#{vintage}]>"
+        "#<Varese::CensusData::Dataset #{title}>"
 
         #DatasetInspector.new(self).present
+      end
+
+      def profile?
+        name.include?("profile")
       end
 
       private

@@ -40,10 +40,14 @@ module Varese
       json { access_token.get(url(options)) }
     end
 
+    # Return the first matching dataset
+    # Ex: api.dataset(vintage: 2012, name: "acs5")
     def dataset(options = {})
       dataset_collection.find(options)
     end
 
+    # Return an array of matching datasets
+    # Ex: api.datasets(:profile? => false, vintage 2012) #=> [ # ... 3 matching acs datasets ]
     def datasets(options = {})
       dataset_collection.where(options)
     end
