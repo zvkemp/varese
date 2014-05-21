@@ -5,16 +5,14 @@ describe Varese::CensusData::CSV::SequenceTableIndex do
   specify { klass.wont_be_nil }
 
   let(:index){ klass.new("fixtures/acs2012_sequence_and_table_lookup.csv") }
-  specify { index.must_be_instance_of klass }
-  specify { puts index.header.inspect }
-  specify do
-    index.parsed.to_a.each { |something| puts something.first.inspect }
-
-    puts "-------------------------------"
-
-    puts index.parsed.to_a[3].map(&:inspect)
-    puts index.parsed.count
-  end
+  #specify { index.must_be_instance_of klass }
+  #  index.parsed.to_a.each { |something| puts something.first.inspect }
+#
+#    puts "-------------------------------"
+#
+#    puts index.parsed.to_a[3].map(&:inspect)
+#    puts index.parsed.count
+#  end
 
 
 end

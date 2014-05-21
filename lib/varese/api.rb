@@ -7,7 +7,7 @@ module Varese
   class AccessToken
     attr_reader :key
 
-    def initialize(key)
+    def initialize(key = default_key)
       @key = key
     end
 
@@ -16,13 +16,21 @@ module Varese
       open(URI.parse(url)).read
     end
 
+    private
+
+    # Looks for a file at fixtures/api_key
+    def default_key
+      File.read('fixtures/api_key').strip
+    end
+
   end
 
   class API
     extend Forwardable
     attr_reader :access_token, :url_defaults
+    def_delegators :access_token, :key
 
-    def initialize(access_token, url_defaults = {})
+    def initialize(access_token = default_access_token, url_defaults = {})
       # all requests are routed through the access token
       @access_token = access_token
       @url_defaults = url_defaults
@@ -32,12 +40,20 @@ module Varese
       json { access_token.get(url(options)) }
     end
 
-    def datasets
-      raw_datasets.map {|ds| Varese::CensusData::Dataset.new(ds, self) }
+    def dataset(options = {})
+      dataset_collection.find(options)
     end
 
+    def datasets(options = {})
+      dataset_collection.where(options)
+    end
 
     private
+
+      def dataset_collection
+        @dataset_collection ||= DatasetCollection.new(raw_datasets.map {|ds| Varese::CensusData::Dataset.new(ds, self) })
+      end
+
       def raw_datasets
         get(Varese::URLBuilder.new.dataset_meta_url)
       end
@@ -48,7 +64,47 @@ module Varese
 
       def url(options)
         return options if options.is_a? String
-        Varese::URLBuilder.new(url_defaults.merge(options).merge({ key: access_token.key }))
+        Varese::URLBuilder.new(url_defaults.merge(options).merge({ key: key }))
+      end
+
+      def default_access_token
+        Varese::AccessToken.new
+      end
+
+      class DatasetCollection
+        attr_reader :datasets
+        include Enumerable
+
+        def initialize(dataset_array)
+          @datasets = Array(dataset_array)
+        end
+
+        def each(&block)
+          to_a.each(&block)
+        end
+
+        alias_method :to_a, :datasets
+        alias_method :to_ary, :datasets
+
+        # returns an array of matching datasets
+        def where(options = {})
+          match_attributes_using :select, options
+        end
+
+        # returns a single dataset (the first result from `where`)
+        def find(options = {})
+          match_attributes_using :detect, options
+        end
+
+        private
+
+        def match_attributes_using(method_sym, options)
+          datasets.send(method_sym) do |dataset|
+            options.inject(true) do |bool, (key, value)|
+              bool ? dataset.send(key) == value : bool
+            end
+          end
+        end
       end
   end
 end

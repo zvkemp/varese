@@ -18,7 +18,21 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+* This is a very rough draft *
+
+By default, Varese will look for a `fixtures/api_key` file (ignored by git). An API key from the census can also be
+passed to the `AccessToken` constructor:
+
+```ruby
+# using defaults
+api = Varese::API.new
+
+# passing in a key
+api = Varese::API.new(Varese::AccessToken.new("api_key"))
+```
+
+
+
 
 ## Contributing
 
@@ -27,3 +41,4 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+

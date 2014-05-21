@@ -31,7 +31,9 @@ module Varese
       end
 
       def inspect
-        DatasetInspector.new(self).present
+        "#<Varese::CensusData::Dataset #{identifier} #{name} [#{vintage}]>"
+
+        #DatasetInspector.new(self).present
       end
 
       private
