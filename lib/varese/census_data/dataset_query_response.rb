@@ -23,15 +23,6 @@ module Varese
 
     end
 
-    class Rollup
-      attr_reader :data, :attributes, :options
-      def initialize(data, *attributes, options)
-        @data       = data
-        @attributes = attributes
-        @options    = options
-      end
-    end
-
     # There is a limit to how many variables can be fetched in a single request.
     # MergeQueryResponses (also available as DatasetQueryResponse::merge) will
     # combine results into a single response object.

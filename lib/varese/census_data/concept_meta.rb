@@ -1,5 +1,30 @@
 module Varese
   module CensusData
+
+    # The ConceptMeta class is a wrapper around a collection of related
+    # variables. For example, B01001 (sex by age) has 98 associated variables
+    # representing every distinct age cohort combined with a binary gender variable.
+    # There are also totals on male, female, and an overarching total. In addition,
+    # every variable is accompanied by a 'margin of error' counterpart.
+    #
+    # The constructor is designed to be called from a CensusData::Dataset object's 
+    # `concept` method:
+    #
+    #     dataset.concept("B01001")
+    #
+    # methods:
+    #
+    #   attributes: the unique set of attributes described by all of the individual variables
+    #     (made by splitting the `!!`-delimited variable description string;
+    #     "Margin Of Error For" not included; )
+    #   rollup: In order to condense the data into some sort of usable form, the rollup method
+    #   is designed to partition and sum data based on the given attributes (variables and geography).
+    #   
+    #   Of course, it doesn't actually work yet (haven't landed on a suitable api).
+    #
+    #   Currently, rollups act as downloaders and
+    #   automatically download data using the referenced dataset.
+    #
     class ConceptMeta < Meta
       attr_reader :variables, :dataset
 
@@ -14,7 +39,9 @@ module Varese
       end
 
       def rollup(geography)
-        data(geography)
+        Rollup.build(data(geography)) do
+
+        end
       end
 
       private
@@ -31,6 +58,19 @@ module Varese
 
       def query_variables
         variables.select(&:estimate?)
+      end
+    end
+
+    class Rollup
+      class << self
+        def build(data, &block)
+          new(data, block.call)
+        end
+      end
+
+      def initialize(data, attrs)
+        @data = data
+        @attrs = attrs
       end
     end
   end

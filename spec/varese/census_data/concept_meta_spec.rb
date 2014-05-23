@@ -11,12 +11,9 @@ describe Varese::CensusData::ConceptMeta do
     -> { default_dataset.concept("MISSING") }.must_raise ArgumentError
     concept.must_be_instance_of klass
     concept.dataset.must_equal default_dataset
-    concept.rollup({ for: "county:*", in: "state:06" }).tap do |rollup|
-    end
   end
 
   specify "state of california" do
-    concept.rollup({ for: "state:06" }).tap do |rollup|
-    end
+    puts concept.rollup({ for: "state:06" }){|_, age| age }.inspect
   end
 end
