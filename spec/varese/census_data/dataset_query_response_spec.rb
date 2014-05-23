@@ -24,7 +24,6 @@ describe Varese::CensusData::DatasetQueryResponse do
       ]
     end
 
-    specify { puts guidsa.count }
 
     let(:guids){ ["B01001_021E", "B01001_042E", "B01001_049E", "B01001_004E", "B01001_025E"] }
     let(:counties){ default_dataset.query(get: guids.join(","), for: "county:*", in: "state:06") }
@@ -45,8 +44,38 @@ describe Varese::CensusData::DatasetQueryResponse do
     describe "to_a" do
       let(:variable_metadata){ guids.map {|g| [g, default_dataset.variables.by_guid[g]] } }
       let(:counties_array){ counties.to_a }
-      specify { counties_array.first.must_equal 1 }
-      specify { puts variable_metadata.inspect }
+      specify { counties_array.first.must_be_instance_of Hash }
     end
+  end
+end
+
+describe Varese::CensusData::MergeQueryResponses do
+  let(:klass){ Varese::CensusData::MergeQueryResponses }
+
+  let(:raw) do
+    [ [ ["VAR_1", "VAR_2", "state", "county"],
+        ["100",   "200",   "06"   , "001"   ],
+        ["1000",  "2000",  "06"   , "002"   ] ],
+      [ ["VAR_3", "VAR_4", "state", "county"],
+        ["300",   "400",   "06"   , "001"   ],
+        ["3000",  "4000",  "06"   , "002"   ] ],
+      [ ["VAR_5", "VAR_6", "state", "county"],
+        ["500",   "600",   "06"   , "001"   ],
+        ["5000",  "6000",  "06"   , "002"   ] ] ]
+  end
+
+  let(:response_1){ Varese::CensusData::DatasetQueryResponse.new(*raw[0]) }
+  let(:response_2){ Varese::CensusData::DatasetQueryResponse.new(*raw[1]) }
+  let(:response_3){ Varese::CensusData::DatasetQueryResponse.new(*raw[2]) }
+  let(:merge){ Varese::CensusData::MergeQueryResponses.new(response_1, response_2, response_3) }
+  let(:merged){ merge.to_response }
+
+  specify { merge.send(:common_header_fields).must_equal %w(state county) }
+  specify { merge.send(:merged_headers).must_equal %w(VAR_1 VAR_2 VAR_3 VAR_4 VAR_5 VAR_6 state county) }
+  specify { merged.body.count.must_equal 2 }
+  specify { merged.must_be_instance_of Varese::CensusData::DatasetQueryResponse }
+  specify do
+    merged.body.first.must_equal %w[100 200 300 400 500 600 06 001]
+    merged.body.last.must_equal  %w[1000 2000 3000 4000 5000 6000 06 002]
   end
 end

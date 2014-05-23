@@ -8,6 +8,8 @@ module Varese
     require 'varese/census_data/concept_meta'
     require 'varese/census_data/dataset'
     require 'varese/census_data/dataset_query_response'
+
+    MAX_VARS_PER_REQUEST = 50
   end
 end
 
