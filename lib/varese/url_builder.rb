@@ -27,55 +27,55 @@ module Varese
     end
 
 
-    private
+  private
 
-      def validate_and_build_url
-        raise InvalidURLError unless dataset && year
-        return build_url
-      end
+    def validate_and_build_url
+      raise InvalidURLError unless dataset && year
+      build_url
+    end
 
-      def metadata_url
-        "#{base_url}/data.json"
-      end
+    def metadata_url
+      "#{base_url}/data.json"
+    end
 
-      def build_url
-        "#{base_url}/data/#{year}/#{dataset}".tap do |str|
-          str << "?#{query_string}" if query
-        end
+    def build_url
+      "#{base_url}/data/#{year}/#{dataset}".tap do |str|
+        str << "?#{query_string}" if query
       end
+    end
 
-      def builder_option_dataset(n)
-        @dataset = "#{n}"
-      end
+    def builder_option_dataset(n)
+      @dataset = "#{n}"
+    end
 
-      def builder_option_acs(n)
-        @dataset = "acs#{n}"
-      end
+    def builder_option_acs(n)
+      @dataset = "acs#{n}"
+    end
 
-      def builder_option_year(n)
-        @year = n
-      end
-      alias_method :builder_option_vintage, :builder_option_year
+    def builder_option_year(n)
+      @year = n
+    end
+    alias_method :builder_option_vintage, :builder_option_year
 
-      def builder_option_sf(n)
-        @dataset = "sf#{n}"
-      end
+    def builder_option_sf(n)
+      @dataset = "sf#{n}"
+    end
 
-      def base_url
-        'http://api.census.gov'
-      end
+    def base_url
+      'http://api.census.gov'
+    end
 
-      def query_string
-        (query || {}).merge(api_key_hash).map do |key, value|
-          "#{key}=#{value}"
-        end.join("&")
-      end
+    def query_string
+      (query || {}).merge(api_key_hash).map do |key, value|
+        "#{key}=#{value}"
+      end.join("&")
+    end
 
-      def api_key_hash
-        {}.tap do |hash|
-          hash[:key] = @key if @key
-        end
+    def api_key_hash
+      {}.tap do |hash|
+        hash[:key] = @key if @key
       end
+    end
   end
 
   class InvalidURLError < StandardError

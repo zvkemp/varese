@@ -8,7 +8,7 @@ module Varese
 
       class << self
         def data_attribute(sym, data_key, *transformation_methods)
-          define_method sym do 
+          define_method sym do
             transformation_methods.inject(raw[data_key]) do |data, transformation_sym|
               data.send transformation_sym
             end

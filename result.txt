@@ -1,0 +1,861 @@
+Inspecting 18 files
+WCCCCWCC.CWCCCCWCC
+
+Offenses:
+
+lib/varese/census_data/concept_meta.rb:4:1: C: Extra empty line detected at body beginning.
+lib/varese/census_data/dataset.rb:10:37: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      meta_attribute :vintage     , "c_vintage"
+                                    ^^^^^^^^^^^
+lib/varese/census_data/dataset.rb:11:37: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      meta_attribute :name        , "c_dataset"     , ->(v){ v.join(" ") }
+                                    ^^^^^^^^^^^
+lib/varese/census_data/dataset.rb:11:60: C: Space missing to the left of {.
+      meta_attribute :name        , "c_dataset"     , ->(v){ v.join(" ") }
+                                                           ^
+lib/varese/census_data/dataset.rb:11:69: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      meta_attribute :name        , "c_dataset"     , ->(v){ v.join(" ") }
+                                                                    ^^^
+lib/varese/census_data/dataset.rb:12:37: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      meta_attribute :aggregate?  , "c_isAggregate"
+                                    ^^^^^^^^^^^^^^^
+lib/varese/census_data/dataset.rb:13:37: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      meta_attribute :description , "description"
+                                    ^^^^^^^^^^^^^
+lib/varese/census_data/dataset.rb:14:37: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      meta_attribute :identifier  , "identifier"
+                                    ^^^^^^^^^^^^
+lib/varese/census_data/dataset.rb:15:37: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      meta_attribute :spatial     , "spatial"
+                                    ^^^^^^^^^
+lib/varese/census_data/dataset.rb:16:37: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      meta_attribute :temporal    , "temporal"      , :to_i
+                                    ^^^^^^^^^^
+lib/varese/census_data/dataset.rb:17:37: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      meta_attribute :title       , "title"
+                                    ^^^^^^^
+lib/varese/census_data/dataset.rb:24:20: C: [33m%i[0m-literals should be delimited by [33m([0m and [33m)[0m
+        @links ||= %i[geography variables tags examples documentation].each_with_object({}) do |sym, hash|
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/varese/census_data/dataset.rb:24:81: C: Line is too long. [106/80]
+        @links ||= %i[geography variables tags examples documentation].each_with_object({}) do |sym, hash|
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/varese/census_data/dataset.rb:32:81: C: Line is too long. [85/80]
+      # in `'tract' => ['state', 'county']`, for=tract:*in=state:06 is a valid query.
+                                                                                ^^^^^
+lib/varese/census_data/dataset.rb:36:1: C: Trailing whitespace detected.
+lib/varese/census_data/dataset.rb:55:9: C: Missing space after #.
+        #DatasetInspector.new(self).present
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/varese/census_data/dataset.rb:59:23: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        name.include?("profile")
+                      ^^^^^^^^^
+lib/varese/census_data/dataset.rb:67:43: C: Space between { and | missing.
+        api.get(default_query_options.tap {|q| q[:query] = options }) 
+                                          ^^
+lib/varese/census_data/dataset.rb:67:70: C: Trailing whitespace detected.
+        api.get(default_query_options.tap {|q| q[:query] = options }) 
+                                                                     ^
+lib/varese/census_data/dataset.rb:71:69: C: Avoid using {...} for multi-line blocks.
+        ConceptMeta.new(variables.by_concept_id.fetch(concept_name) {
+                                                                    ^
+lib/varese/census_data/dataset.rb:72:11: C: Use [33mfail[0m instead of [33mraise[0m to signal exceptions.
+          raise ArgumentError, "Concept #{concept_name} not found"
+          ^^^^^
+lib/varese/census_data/dataset.rb:85:1: C: Extra empty line detected at body end.
+lib/varese/census_data/dataset.rb:101:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "#<Varese::CensusData::Dataset"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/varese/census_data/dataset.rb:105:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "".tap do |str|
+        ^^
+lib/varese/census_data/dataset.rb:109:20: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+            str << " "
+                   ^^^
+lib/varese/census_data/dataset.rb:117:35: W: Redundant use of [33mObject#to_s[0m in interpolation.
+            return "#<#{var.class.to_s} ...>"
+                                  ^^^^
+lib/varese/census_data/dataset.rb:125:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        ">"
+        ^^^
+lib/varese/census_data/dataset.rb:137:1: C: 1 trailing blank lines detected.
+lib/varese/census_data/dataset_query_response.rb:4:1: C: Extra empty line detected at body beginning.
+lib/varese/census_data/dataset_query_response.rb:11:18: C: Space between { and | missing.
+        body.map {|row| Hash[header.zip(row)] }
+                 ^^
+lib/varese/census_data/dataset_query_response.rb:13:1: C: Trailing whitespace detected.
+lib/varese/census_data/dataset_query_response.rb:17:1: C: Extra empty line detected at body end.
+lib/varese/census_data/dataset_query_response.rb:32:1: C: 2 trailing blank lines detected.
+lib/varese/census_data/geography_meta.rb:3:1: C: Extra empty line detected at body beginning.
+lib/varese/census_data/variable_meta.rb:8:28: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        @label      = data["label"]
+                           ^^^^^^^
+lib/varese/census_data/variable_meta.rb:9:28: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        @concept    = data["concept"]
+                           ^^^^^^^^^
+lib/varese/census_data/variable_meta.rb:10:31: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        @concept_id = "#{data["concept"]}".split(".").first
+                              ^^^^^^^^^
+lib/varese/census_data/variable_meta.rb:10:50: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        @concept_id = "#{data["concept"]}".split(".").first
+                                                 ^^^
+lib/varese/census_data/variable_meta.rb:12:40: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        @attributes = "#{label}".split("!!") - ["Margin Of Error For"]
+                                       ^^^^
+lib/varese/census_data/variable_meta.rb:12:49: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        @attributes = "#{label}".split("!!") - ["Margin Of Error For"]
+                                                ^^^^^^^^^^^^^^^^^^^^^
+lib/varese/census_data/variable_meta.rb:26:11: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        { "E" => :estimate, "M" => :margin_of_error }.fetch("#{guid}".chars.last, :unknown)
+          ^^^
+lib/varese/census_data/variable_meta.rb:26:29: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        { "E" => :estimate, "M" => :margin_of_error }.fetch("#{guid}".chars.last, :unknown)
+                            ^^^
+lib/varese/census_data/variable_meta.rb:26:81: C: Line is too long. [91/80]
+        { "E" => :estimate, "M" => :margin_of_error }.fetch("#{guid}".chars.last, :unknown)
+                                                                                ^^^^^^^^^^^
+lib/varese/census_data/variable_meta_set.rb:5:7: C: Method has too many lines. [11/10]
+      def initialize(raw)
+      ^^^
+lib/varese/census_data/variable_meta_set.rb:7:35: C: Space between { and | missing.
+        @by_label      = Hash.new {|h,k| h[k] = [] }
+                                  ^^
+lib/varese/census_data/variable_meta_set.rb:7:38: C: Space missing after comma.
+        @by_label      = Hash.new {|h,k| h[k] = [] }
+                                     ^
+lib/varese/census_data/variable_meta_set.rb:8:35: C: Space between { and | missing.
+        @by_concept    = Hash.new {|h,k| h[k] = [] }
+                                  ^^
+lib/varese/census_data/variable_meta_set.rb:8:38: C: Space missing after comma.
+        @by_concept    = Hash.new {|h,k| h[k] = [] }
+                                     ^
+lib/varese/census_data/variable_meta_set.rb:9:35: C: Space between { and | missing.
+        @by_concept_id = Hash.new {|h,k| h[k] = [] }
+                                  ^^
+lib/varese/census_data/variable_meta_set.rb:9:38: C: Space missing after comma.
+        @by_concept_id = Hash.new {|h,k| h[k] = [] }
+                                     ^
+lib/varese/census_data/variable_meta_set.rb:11:1: C: Extra blank line detected.
+lib/varese/census_data/variable_meta_set.rb:13:13: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        raw["variables"].each do |guid, data|
+            ^^^^^^^^^^^
+lib/varese/census_data/variable_meta_set.rb:25:25: C: Space between { and | missing.
+        by_label.select {|label, _| label.match(regex) }.values.flatten.uniq
+                        ^^
+lib/varese/census_data/variable_meta_set.rb:29:24: C: Space between { and | missing.
+        by_guid.select {|guid, _| guid[terms] }.values
+                       ^^
+lib/varese/census_data/variable_meta_set.rb:32:27: W: Unused method argument - [33mterms[0m. If it's necessary, use [33m_[0m or [33m_terms[0m as an argument name to indicate that it won't be used. You can also write as [33msearch_concepts(*)[0m if you want the method to accept any arguments but don't care about them.
+      def search_concepts(terms)
+                          ^^^^^
+lib/varese/census_data.rb:13:1: C: 1 trailing blank lines detected.
+lib/varese/fips/state.rb:3:5: C: Class definition is too long. [124/100]
+    class State
+    ^^^^^
+lib/varese/fips/state.rb:5:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ak" => "alaska",
+        ^^^^
+lib/varese/fips/state.rb:5:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ak" => "alaska",
+                ^^^^^^^^
+lib/varese/fips/state.rb:6:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "al" => "alabama",
+        ^^^^
+lib/varese/fips/state.rb:6:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "al" => "alabama",
+                ^^^^^^^^^
+lib/varese/fips/state.rb:7:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ar" => "arkansas",
+        ^^^^
+lib/varese/fips/state.rb:7:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ar" => "arkansas",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:8:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "as" => "american samoa",
+        ^^^^
+lib/varese/fips/state.rb:8:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "as" => "american samoa",
+                ^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:9:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "az" => "arizona",
+        ^^^^
+lib/varese/fips/state.rb:9:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "az" => "arizona",
+                ^^^^^^^^^
+lib/varese/fips/state.rb:10:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ca" => "california",
+        ^^^^
+lib/varese/fips/state.rb:10:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ca" => "california",
+                ^^^^^^^^^^^^
+lib/varese/fips/state.rb:11:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "co" => "colorado",
+        ^^^^
+lib/varese/fips/state.rb:11:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "co" => "colorado",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:12:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ct" => "connecticut",
+        ^^^^
+lib/varese/fips/state.rb:12:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ct" => "connecticut",
+                ^^^^^^^^^^^^^
+lib/varese/fips/state.rb:13:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "dc" => "district of columbia",
+        ^^^^
+lib/varese/fips/state.rb:13:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "dc" => "district of columbia",
+                ^^^^^^^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:14:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "de" => "delaware",
+        ^^^^
+lib/varese/fips/state.rb:14:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "de" => "delaware",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:15:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "fl" => "florida",
+        ^^^^
+lib/varese/fips/state.rb:15:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "fl" => "florida",
+                ^^^^^^^^^
+lib/varese/fips/state.rb:16:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ga" => "georgia",
+        ^^^^
+lib/varese/fips/state.rb:16:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ga" => "georgia",
+                ^^^^^^^^^
+lib/varese/fips/state.rb:17:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "gu" => "guam",
+        ^^^^
+lib/varese/fips/state.rb:17:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "gu" => "guam",
+                ^^^^^^
+lib/varese/fips/state.rb:18:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "hi" => "hawaii",
+        ^^^^
+lib/varese/fips/state.rb:18:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "hi" => "hawaii",
+                ^^^^^^^^
+lib/varese/fips/state.rb:19:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ia" => "iowa",
+        ^^^^
+lib/varese/fips/state.rb:19:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ia" => "iowa",
+                ^^^^^^
+lib/varese/fips/state.rb:20:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "id" => "idaho",
+        ^^^^
+lib/varese/fips/state.rb:20:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "id" => "idaho",
+                ^^^^^^^
+lib/varese/fips/state.rb:21:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "il" => "illinois",
+        ^^^^
+lib/varese/fips/state.rb:21:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "il" => "illinois",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:22:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "in" => "indiana",
+        ^^^^
+lib/varese/fips/state.rb:22:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "in" => "indiana",
+                ^^^^^^^^^
+lib/varese/fips/state.rb:23:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ks" => "kansas",
+        ^^^^
+lib/varese/fips/state.rb:23:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ks" => "kansas",
+                ^^^^^^^^
+lib/varese/fips/state.rb:24:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ky" => "kentucky",
+        ^^^^
+lib/varese/fips/state.rb:24:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ky" => "kentucky",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:25:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "la" => "louisiana",
+        ^^^^
+lib/varese/fips/state.rb:25:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "la" => "louisiana",
+                ^^^^^^^^^^^
+lib/varese/fips/state.rb:26:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ma" => "massachusetts",
+        ^^^^
+lib/varese/fips/state.rb:26:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ma" => "massachusetts",
+                ^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:27:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "md" => "maryland",
+        ^^^^
+lib/varese/fips/state.rb:27:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "md" => "maryland",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:28:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "me" => "maine",
+        ^^^^
+lib/varese/fips/state.rb:28:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "me" => "maine",
+                ^^^^^^^
+lib/varese/fips/state.rb:29:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mi" => "michigan",
+        ^^^^
+lib/varese/fips/state.rb:29:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mi" => "michigan",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:30:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mn" => "minnesota",
+        ^^^^
+lib/varese/fips/state.rb:30:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mn" => "minnesota",
+                ^^^^^^^^^^^
+lib/varese/fips/state.rb:31:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mo" => "missouri",
+        ^^^^
+lib/varese/fips/state.rb:31:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mo" => "missouri",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:32:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ms" => "mississippi",
+        ^^^^
+lib/varese/fips/state.rb:32:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ms" => "mississippi",
+                ^^^^^^^^^^^^^
+lib/varese/fips/state.rb:33:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mt" => "montana",
+        ^^^^
+lib/varese/fips/state.rb:33:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mt" => "montana",
+                ^^^^^^^^^
+lib/varese/fips/state.rb:34:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nc" => "north carolina",
+        ^^^^
+lib/varese/fips/state.rb:34:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nc" => "north carolina",
+                ^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:35:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nd" => "north dakota",
+        ^^^^
+lib/varese/fips/state.rb:35:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nd" => "north dakota",
+                ^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:36:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ne" => "nebraska",
+        ^^^^
+lib/varese/fips/state.rb:36:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ne" => "nebraska",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:37:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nh" => "new hampshire",
+        ^^^^
+lib/varese/fips/state.rb:37:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nh" => "new hampshire",
+                ^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:38:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nj" => "new jersey",
+        ^^^^
+lib/varese/fips/state.rb:38:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nj" => "new jersey",
+                ^^^^^^^^^^^^
+lib/varese/fips/state.rb:39:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nm" => "new mexico",
+        ^^^^
+lib/varese/fips/state.rb:39:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nm" => "new mexico",
+                ^^^^^^^^^^^^
+lib/varese/fips/state.rb:40:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nv" => "nevada",
+        ^^^^
+lib/varese/fips/state.rb:40:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nv" => "nevada",
+                ^^^^^^^^
+lib/varese/fips/state.rb:41:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ny" => "new york",
+        ^^^^
+lib/varese/fips/state.rb:41:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ny" => "new york",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:42:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "oh" => "ohio",
+        ^^^^
+lib/varese/fips/state.rb:42:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "oh" => "ohio",
+                ^^^^^^
+lib/varese/fips/state.rb:43:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ok" => "oklahoma",
+        ^^^^
+lib/varese/fips/state.rb:43:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ok" => "oklahoma",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:44:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "or" => "oregon",
+        ^^^^
+lib/varese/fips/state.rb:44:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "or" => "oregon",
+                ^^^^^^^^
+lib/varese/fips/state.rb:45:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "pa" => "pennsylvania",
+        ^^^^
+lib/varese/fips/state.rb:45:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "pa" => "pennsylvania",
+                ^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:46:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "pr" => "puerto rico",
+        ^^^^
+lib/varese/fips/state.rb:46:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "pr" => "puerto rico",
+                ^^^^^^^^^^^^^
+lib/varese/fips/state.rb:47:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ri" => "rhode island",
+        ^^^^
+lib/varese/fips/state.rb:47:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ri" => "rhode island",
+                ^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:48:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "sc" => "south carolina",
+        ^^^^
+lib/varese/fips/state.rb:48:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "sc" => "south carolina",
+                ^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:49:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "sd" => "south dakota",
+        ^^^^
+lib/varese/fips/state.rb:49:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "sd" => "south dakota",
+                ^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:50:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "tn" => "tennessee",
+        ^^^^
+lib/varese/fips/state.rb:50:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "tn" => "tennessee",
+                ^^^^^^^^^^^
+lib/varese/fips/state.rb:51:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "tx" => "texas",
+        ^^^^
+lib/varese/fips/state.rb:51:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "tx" => "texas",
+                ^^^^^^^
+lib/varese/fips/state.rb:52:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ut" => "utah",
+        ^^^^
+lib/varese/fips/state.rb:52:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ut" => "utah",
+                ^^^^^^
+lib/varese/fips/state.rb:53:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "va" => "virginia",
+        ^^^^
+lib/varese/fips/state.rb:53:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "va" => "virginia",
+                ^^^^^^^^^^
+lib/varese/fips/state.rb:54:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "vi" => "virgin islands",
+        ^^^^
+lib/varese/fips/state.rb:54:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "vi" => "virgin islands",
+                ^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:55:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "vt" => "vermont",
+        ^^^^
+lib/varese/fips/state.rb:55:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "vt" => "vermont",
+                ^^^^^^^^^
+lib/varese/fips/state.rb:56:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wa" => "washington",
+        ^^^^
+lib/varese/fips/state.rb:56:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wa" => "washington",
+                ^^^^^^^^^^^^
+lib/varese/fips/state.rb:57:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wi" => "wisconsin",
+        ^^^^
+lib/varese/fips/state.rb:57:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wi" => "wisconsin",
+                ^^^^^^^^^^^
+lib/varese/fips/state.rb:58:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wv" => "west virginia",
+        ^^^^
+lib/varese/fips/state.rb:58:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wv" => "west virginia",
+                ^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:59:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wy" => "wyoming"
+        ^^^^
+lib/varese/fips/state.rb:59:17: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wy" => "wyoming"
+                ^^^^^^^^^
+lib/varese/fips/state.rb:63:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "alaska"               => "02",
+        ^^^^^^^^
+lib/varese/fips/state.rb:63:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "alaska"               => "02",
+                                  ^^^^
+lib/varese/fips/state.rb:64:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "alabama"              => "01",
+        ^^^^^^^^^
+lib/varese/fips/state.rb:64:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "alabama"              => "01",
+                                  ^^^^
+lib/varese/fips/state.rb:65:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "arkansas"             => "05",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:65:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "arkansas"             => "05",
+                                  ^^^^
+lib/varese/fips/state.rb:66:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "american samoa"       => "60",
+        ^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:66:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "american samoa"       => "60",
+                                  ^^^^
+lib/varese/fips/state.rb:67:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "arizona"              => "04",
+        ^^^^^^^^^
+lib/varese/fips/state.rb:67:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "arizona"              => "04",
+                                  ^^^^
+lib/varese/fips/state.rb:68:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "california"           => "06",
+        ^^^^^^^^^^^^
+lib/varese/fips/state.rb:68:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "california"           => "06",
+                                  ^^^^
+lib/varese/fips/state.rb:69:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "colorado"             => "08",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:69:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "colorado"             => "08",
+                                  ^^^^
+lib/varese/fips/state.rb:70:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "connecticut"          => "09",
+        ^^^^^^^^^^^^^
+lib/varese/fips/state.rb:70:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "connecticut"          => "09",
+                                  ^^^^
+lib/varese/fips/state.rb:71:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "district of columbia" => "11",
+        ^^^^^^^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:71:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "district of columbia" => "11",
+                                  ^^^^
+lib/varese/fips/state.rb:72:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "delaware"             => "10",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:72:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "delaware"             => "10",
+                                  ^^^^
+lib/varese/fips/state.rb:73:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "florida"              => "12",
+        ^^^^^^^^^
+lib/varese/fips/state.rb:73:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "florida"              => "12",
+                                  ^^^^
+lib/varese/fips/state.rb:74:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "georgia"              => "13",
+        ^^^^^^^^^
+lib/varese/fips/state.rb:74:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "georgia"              => "13",
+                                  ^^^^
+lib/varese/fips/state.rb:75:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "guam"                 => "66",
+        ^^^^^^
+lib/varese/fips/state.rb:75:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "guam"                 => "66",
+                                  ^^^^
+lib/varese/fips/state.rb:76:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "hawaii"               => "15",
+        ^^^^^^^^
+lib/varese/fips/state.rb:76:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "hawaii"               => "15",
+                                  ^^^^
+lib/varese/fips/state.rb:77:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "iowa"                 => "19",
+        ^^^^^^
+lib/varese/fips/state.rb:77:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "iowa"                 => "19",
+                                  ^^^^
+lib/varese/fips/state.rb:78:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "idaho"                => "16",
+        ^^^^^^^
+lib/varese/fips/state.rb:78:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "idaho"                => "16",
+                                  ^^^^
+lib/varese/fips/state.rb:79:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "illinois"             => "17",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:79:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "illinois"             => "17",
+                                  ^^^^
+lib/varese/fips/state.rb:80:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "indiana"              => "18",
+        ^^^^^^^^^
+lib/varese/fips/state.rb:80:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "indiana"              => "18",
+                                  ^^^^
+lib/varese/fips/state.rb:81:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "kansas"               => "20",
+        ^^^^^^^^
+lib/varese/fips/state.rb:81:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "kansas"               => "20",
+                                  ^^^^
+lib/varese/fips/state.rb:82:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "kentucky"             => "21",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:82:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "kentucky"             => "21",
+                                  ^^^^
+lib/varese/fips/state.rb:83:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "louisiana"            => "22",
+        ^^^^^^^^^^^
+lib/varese/fips/state.rb:83:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "louisiana"            => "22",
+                                  ^^^^
+lib/varese/fips/state.rb:84:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "massachusetts"        => "25",
+        ^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:84:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "massachusetts"        => "25",
+                                  ^^^^
+lib/varese/fips/state.rb:85:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "maryland"             => "24",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:85:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "maryland"             => "24",
+                                  ^^^^
+lib/varese/fips/state.rb:86:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "maine"                => "23",
+        ^^^^^^^
+lib/varese/fips/state.rb:86:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "maine"                => "23",
+                                  ^^^^
+lib/varese/fips/state.rb:87:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "michigan"             => "26",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:87:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "michigan"             => "26",
+                                  ^^^^
+lib/varese/fips/state.rb:88:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "minnesota"            => "27",
+        ^^^^^^^^^^^
+lib/varese/fips/state.rb:88:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "minnesota"            => "27",
+                                  ^^^^
+lib/varese/fips/state.rb:89:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "missouri"             => "29",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:89:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "missouri"             => "29",
+                                  ^^^^
+lib/varese/fips/state.rb:90:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mississippi"          => "28",
+        ^^^^^^^^^^^^^
+lib/varese/fips/state.rb:90:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "mississippi"          => "28",
+                                  ^^^^
+lib/varese/fips/state.rb:91:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "montana"              => "30",
+        ^^^^^^^^^
+lib/varese/fips/state.rb:91:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "montana"              => "30",
+                                  ^^^^
+lib/varese/fips/state.rb:92:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "north carolina"       => "37",
+        ^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:92:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "north carolina"       => "37",
+                                  ^^^^
+lib/varese/fips/state.rb:93:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "north dakota"         => "38",
+        ^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:93:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "north dakota"         => "38",
+                                  ^^^^
+lib/varese/fips/state.rb:94:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nebraska"             => "31",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:94:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nebraska"             => "31",
+                                  ^^^^
+lib/varese/fips/state.rb:95:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "new hampshire"        => "33",
+        ^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:95:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "new hampshire"        => "33",
+                                  ^^^^
+lib/varese/fips/state.rb:96:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "new jersey"           => "34",
+        ^^^^^^^^^^^^
+lib/varese/fips/state.rb:96:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "new jersey"           => "34",
+                                  ^^^^
+lib/varese/fips/state.rb:97:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "new mexico"           => "35",
+        ^^^^^^^^^^^^
+lib/varese/fips/state.rb:97:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "new mexico"           => "35",
+                                  ^^^^
+lib/varese/fips/state.rb:98:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nevada"               => "32",
+        ^^^^^^^^
+lib/varese/fips/state.rb:98:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "nevada"               => "32",
+                                  ^^^^
+lib/varese/fips/state.rb:99:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "new york"             => "36",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:99:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "new york"             => "36",
+                                  ^^^^
+lib/varese/fips/state.rb:100:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ohio"                 => "39",
+        ^^^^^^
+lib/varese/fips/state.rb:100:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "ohio"                 => "39",
+                                  ^^^^
+lib/varese/fips/state.rb:101:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "oklahoma"             => "40",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:101:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "oklahoma"             => "40",
+                                  ^^^^
+lib/varese/fips/state.rb:102:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "oregon"               => "41",
+        ^^^^^^^^
+lib/varese/fips/state.rb:102:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "oregon"               => "41",
+                                  ^^^^
+lib/varese/fips/state.rb:103:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "pennsylvania"         => "42",
+        ^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:103:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "pennsylvania"         => "42",
+                                  ^^^^
+lib/varese/fips/state.rb:104:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "puerto rico"          => "72",
+        ^^^^^^^^^^^^^
+lib/varese/fips/state.rb:104:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "puerto rico"          => "72",
+                                  ^^^^
+lib/varese/fips/state.rb:105:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "rhode island"         => "44",
+        ^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:105:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "rhode island"         => "44",
+                                  ^^^^
+lib/varese/fips/state.rb:106:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "south carolina"       => "45",
+        ^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:106:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "south carolina"       => "45",
+                                  ^^^^
+lib/varese/fips/state.rb:107:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "south dakota"         => "46",
+        ^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:107:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "south dakota"         => "46",
+                                  ^^^^
+lib/varese/fips/state.rb:108:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "tennessee"            => "47",
+        ^^^^^^^^^^^
+lib/varese/fips/state.rb:108:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "tennessee"            => "47",
+                                  ^^^^
+lib/varese/fips/state.rb:109:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "texas"                => "48",
+        ^^^^^^^
+lib/varese/fips/state.rb:109:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "texas"                => "48",
+                                  ^^^^
+lib/varese/fips/state.rb:110:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "utah"                 => "49",
+        ^^^^^^
+lib/varese/fips/state.rb:110:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "utah"                 => "49",
+                                  ^^^^
+lib/varese/fips/state.rb:111:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "virginia"             => "51",
+        ^^^^^^^^^^
+lib/varese/fips/state.rb:111:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "virginia"             => "51",
+                                  ^^^^
+lib/varese/fips/state.rb:112:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "virgin islands"       => "78",
+        ^^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:112:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "virgin islands"       => "78",
+                                  ^^^^
+lib/varese/fips/state.rb:113:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "vermont"              => "50",
+        ^^^^^^^^^
+lib/varese/fips/state.rb:113:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "vermont"              => "50",
+                                  ^^^^
+lib/varese/fips/state.rb:114:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "washington"           => "53",
+        ^^^^^^^^^^^^
+lib/varese/fips/state.rb:114:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "washington"           => "53",
+                                  ^^^^
+lib/varese/fips/state.rb:115:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wisconsin"            => "55",
+        ^^^^^^^^^^^
+lib/varese/fips/state.rb:115:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wisconsin"            => "55",
+                                  ^^^^
+lib/varese/fips/state.rb:116:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "west virginia"        => "54",
+        ^^^^^^^^^^^^^^^
+lib/varese/fips/state.rb:116:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "west virginia"        => "54",
+                                  ^^^^
+lib/varese/fips/state.rb:117:9: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wyoming"              => "56"
+        ^^^^^^^^^
+lib/varese/fips/state.rb:117:35: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+        "wyoming"              => "56"
+                                  ^^^^
+lib/varese/fips/state.rb:122:60: C: Space missing to the left of {.
+          state = ABBREVIATIONS.fetch("#{abbrev}".downcase){ raise UnknownAbbreviation }
+                                                           ^
+lib/varese/fips/state.rb:122:62: C: Use [33mfail[0m instead of [33mraise[0m to signal exceptions.
+          state = ABBREVIATIONS.fetch("#{abbrev}".downcase){ raise UnknownAbbreviation }
+                                                             ^^^^^
+lib/varese/fips/state.rb:122:81: C: Line is too long. [88/80]
+          state = ABBREVIATIONS.fetch("#{abbrev}".downcase){ raise UnknownAbbreviation }
+                                                                                ^^^^^^^^
+lib/varese/fips/state.rb:127:47: C: Space missing to the left of {.
+          str = ABBREVIATIONS.fetch("#{name}"){ "#{name}" }
+                                              ^
+lib/varese/fips/state.rb:128:27: C: Space missing to the left of {.
+          CODES.fetch(str){ super }
+                          ^
+lib/varese/fips/state.rb:137:1: C: 1 trailing blank lines detected.
+lib/varese/fips.rb:6:1: C: 1 trailing blank lines detected.
+lib/varese/url_builder.rb:29:1: C: Extra blank line detected.
+lib/varese/url_builder.rb:30:3: C: Indent access modifiers like [33mprivate[0m.
+  private
+  ^^^^^^^
+lib/varese/url_builder.rb:33:7: C: Use [33mfail[0m instead of [33mraise[0m to signal exceptions.
+      raise InvalidURLError unless dataset && year
+      ^^^^^
+lib/varese/url_builder.rb:55:5: C: Use [33mattr_writer[0m to define trivial writer methods.
+    def builder_option_year(n)
+    ^^^
+lib/varese/url_builder.rb:71:16: C: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      end.join("&")
+               ^^^
+lib/varese/url_builder.rb:103:49: C: Space between { and | missing.
+      { for: for_option, in: in_option }.select {|k,v| v }
+                                                ^^
+lib/varese/url_builder.rb:103:51: W: Unused block argument - [33mk[0m. If it's necessary, use [33m_[0m or [33m_k[0m as an argument name to indicate that it won't be used.
+      { for: for_option, in: in_option }.select {|k,v| v }
+                                                  ^
+lib/varese/url_builder.rb:103:52: C: Space missing after comma.
+      { for: for_option, in: in_option }.select {|k,v| v }
+                                                   ^
+lib/varese/url_builder.rb:107:7: C: Use [33mfail[0m instead of [33mraise[0m to signal exceptions.
+      raise GeographicQueryError
+      ^^^^^
+lib/varese/url_builder.rb:113:26: C: Space between { and | missing.
+      f = HIERARCHY.find {|h| options[h] }
+                         ^^
+
+18 files inspected, 342 offenses detected

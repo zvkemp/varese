@@ -1,7 +1,6 @@
 module Varese
   module CensusData
     class ConceptMeta < Meta
-
       attr_reader :variables, :dataset
 
       def initialize(variables, dataset)

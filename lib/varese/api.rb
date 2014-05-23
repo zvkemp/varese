@@ -1,7 +1,7 @@
 require 'forwardable'
 require 'net/http'
 require 'json'
-require 'open-uri' 
+require 'open-uri'
 
 module Varese
   class AccessToken
@@ -12,7 +12,6 @@ module Varese
     end
 
     def get(url)
-      #Net::HTTP.get_response(URI.parse url)
       open(URI.parse(url)).read
     end
 
@@ -22,7 +21,6 @@ module Varese
     def default_key
       File.read('fixtures/api_key').strip
     end
-
   end
 
   class API
@@ -54,61 +52,65 @@ module Varese
 
     private
 
-      def dataset_collection
-        @dataset_collection ||= DatasetCollection.new(raw_datasets.map {|ds| Varese::CensusData::Dataset.new(ds, self) })
+    def dataset_collection
+      @dataset_collection ||= DatasetCollection.new(_datasets)
+    end
+
+    def _datasets
+      raw_datasets.map { |ds| Varese::CensusData::Dataset.new(ds, self) }
+    end
+
+    def raw_datasets
+      get(Varese::URLBuilder.new.dataset_meta_url)
+    end
+
+    def json
+      JSON.parse yield
+    end
+
+    def url(options)
+      return options if options.is_a? String
+      Varese::URLBuilder.new(url_defaults.merge(options).merge({ key: key }))
+    end
+
+    def default_access_token
+      Varese::AccessToken.new
+    end
+
+    class DatasetCollection
+      attr_reader :datasets
+      include Enumerable
+
+      def initialize(dataset_array)
+        @datasets = Array(dataset_array)
       end
 
-      def raw_datasets
-        get(Varese::URLBuilder.new.dataset_meta_url)
+      def each(&block)
+        to_a.each(&block)
       end
 
-      def json(&block)
-        JSON.parse yield
+      alias_method :to_a, :datasets
+      alias_method :to_ary, :datasets
+
+      # returns an array of matching datasets
+      def where(options = {})
+        match_attributes_using :select, options
       end
 
-      def url(options)
-        return options if options.is_a? String
-        Varese::URLBuilder.new(url_defaults.merge(options).merge({ key: key }))
+      # returns a single dataset (the first result from `where`)
+      def find(options = {})
+        match_attributes_using :detect, options
       end
 
-      def default_access_token
-        Varese::AccessToken.new
-      end
+      private
 
-      class DatasetCollection
-        attr_reader :datasets
-        include Enumerable
-
-        def initialize(dataset_array)
-          @datasets = Array(dataset_array)
-        end
-
-        def each(&block)
-          to_a.each(&block)
-        end
-
-        alias_method :to_a, :datasets
-        alias_method :to_ary, :datasets
-
-        # returns an array of matching datasets
-        def where(options = {})
-          match_attributes_using :select, options
-        end
-
-        # returns a single dataset (the first result from `where`)
-        def find(options = {})
-          match_attributes_using :detect, options
-        end
-
-        private
-
-        def match_attributes_using(method_sym, options)
-          datasets.send(method_sym) do |dataset|
-            options.inject(true) do |bool, (key, value)|
-              bool ? dataset.send(key) == value : bool
-            end
+      def match_attributes_using(method_sym, options)
+        datasets.send(method_sym) do |dataset|
+          options.inject(true) do |bool, (key, value)|
+            bool ? dataset.send(key) == value : bool
           end
         end
       end
+    end
   end
 end
