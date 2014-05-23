@@ -1,7 +1,7 @@
 module Varese
   module CensusData
     class VariableMeta < Meta
-      attr_reader :guid, :label, :concept, :concept_id, :type
+      attr_reader :guid, :label, :concept, :concept_id, :type, :attributes
 
       def initialize(guid, data)
         @guid       = guid
@@ -9,6 +9,7 @@ module Varese
         @concept    = data["concept"]
         @concept_id = "#{data["concept"]}".split(".").first
         @type       = derive_type_from_guid(guid)
+        @attributes = "#{label}".split("!!") - ["Margin Of Error For"]
       end
 
       def estimate?

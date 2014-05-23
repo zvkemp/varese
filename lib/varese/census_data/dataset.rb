@@ -67,6 +67,12 @@ module Varese
         api.get(default_query_options.tap {|q| q[:query] = options }) 
       end
 
+      def concept(concept_name)
+        ConceptMeta.new(variables.by_concept_id.fetch(concept_name) {
+          raise ArgumentError, "Concept #{concept_name} not found"
+        }, self)
+      end
+
       private
 
       def default_query_options

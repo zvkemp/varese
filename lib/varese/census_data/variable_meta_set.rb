@@ -43,7 +43,6 @@ module Varese
       def concepts
         by_concept.keys
       end
-
     end
   end
 end
