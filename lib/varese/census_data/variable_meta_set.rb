@@ -15,7 +15,7 @@ module Varese
           by_guid[v.guid] = v
           by_label[v.label]           << v if v.label
           by_concept[v.concept]       << v if v.concept
-          by_concept_id[v.concept.id] << v if v.concept_id
+          by_concept_id[v.concept_id] << v if v.concept_id
         end
       end
 
@@ -43,6 +43,7 @@ module Varese
       def concepts
         by_concept.keys
       end
+
     end
   end
 end

@@ -11,6 +11,14 @@ module Varese
         @type       = derive_type_from_guid(guid)
       end
 
+      def estimate?
+        type == :estimate
+      end
+
+      def margin_of_error?
+        type == :margin_of_error
+      end
+
       private
 
       def derive_type_from_guid(guid)

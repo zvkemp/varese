@@ -6,6 +6,7 @@ module Varese
     require 'varese/census_data/variable_meta'
     require 'varese/census_data/variable_meta_set'
     require 'varese/census_data/dataset'
+    require 'varese/census_data/dataset_query_response'
   end
 end
 

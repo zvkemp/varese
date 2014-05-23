@@ -20,6 +20,7 @@ describe Varese::CensusData::Dataset do
       specify { dataset.identifier.must_equal "2012acs5" }
       specify { dataset.spatial.must_equal "US" }
       specify { dataset.temporal.must_equal 2012 }
+      specify { dataset.send(:default_query_options).must_equal({ dataset: "acs5", year: 2012 }) }
       specify do
         dataset.links.tap do |links|
           links.must_be_instance_of Hash
@@ -30,19 +31,23 @@ describe Varese::CensusData::Dataset do
 
     describe "meta" do
       specify { dataset.geography.must_be_instance_of Varese::CensusData::GeographyMeta   }
-      specify { dataset.variables.must_be_instance_of Varese::CensusData::VariableMetaSet }
 
-      specify "searching" do
-        age = dataset.variables.search_labels('age')
-        age.must_be_instance_of Array
-      end
+      # FIXME: this is really slow (VCR deserializing ~ 150000 lines of yaml)
+      # specify { dataset.variables.must_be_instance_of Varese::CensusData::VariableMetaSet }
+
+      # FIXME: also really slow
+      #specify "searching" do
+        #age = dataset.variables.search_labels('age')
+        #age.must_be_instance_of Array
+      #end
       # specify { dataset.variables.search('age').must_be_instance_of Array }
     end
 
     describe "retrieving data by geography" do
       specify do
-        raw = dataset.query(acs: 5, year: 2012, query: { get: "B01001_001E", for: "county:*", in: "state:06"} )
-        raw.must_equal 1
+        dataset.raw_query({ get: "B01001_001E", for: "county:*", in: "state:06"} ).tap do |raw|
+          raw.must_be_instance_of Array
+        end
       end
     end
   end

@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+#require 'minitest/reporters'
 require 'minitest/pride'
 require 'vcr'
 require 'varese'
@@ -8,6 +9,18 @@ require 'digest'
 VCR.configure do |c|
   c.cassette_library_dir = "fixtures/cassettes"
   c.hook_into :webmock
+end
+
+# Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
+class Minitest::Test
+  def default_api
+    @default_api ||= Varese::API.new(Varese::MockAccessToken.new)
+  end
+
+  def default_dataset
+    @default_dataset ||= default_api.dataset(name: "acs5", vintage: 2012)
+  end
 end
 
 module Varese

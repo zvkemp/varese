@@ -39,10 +39,13 @@ module Varese
       end
 
       def build_url
-        str = "#{base_url}/data/#{year}/#{dataset}"
-        str << "?#{query_string}" if query
-        puts str.inspect
-        str
+        "#{base_url}/data/#{year}/#{dataset}".tap do |str|
+          str << "?#{query_string}" if query
+        end
+      end
+
+      def builder_option_dataset(n)
+        @dataset = "#{n}"
       end
 
       def builder_option_acs(n)
@@ -52,6 +55,7 @@ module Varese
       def builder_option_year(n)
         @year = n
       end
+      alias_method :builder_option_vintage, :builder_option_year
 
       def builder_option_sf(n)
         @dataset = "sf#{n}"

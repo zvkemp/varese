@@ -60,17 +60,17 @@ module Varese
       end
 
       def query(options)
-        api.get(options)
-        #transform_query_options(options)
+        DatasetQueryResponse.new(*raw_query(options))
+      end
+
+      def raw_query(options)
+        api.get(default_query_options.tap {|q| q[:query] = options }) 
       end
 
       private
 
-      def transform_query_options(options)
-        {}.tap do |query_options|
-          query_options[:get] = options.fetch(:datapoint){ options.fetch(:get) }
-          Varese::GeographicQuery.new(options[:geometry]).apply_to query_options
-        end
+      def default_query_options
+        { dataset: name, year: vintage }
       end
 
       def auxilliary_metadata(key, klass = Meta)

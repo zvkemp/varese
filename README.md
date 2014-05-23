@@ -38,6 +38,22 @@ api = Varese::API.new(Varese::AccessToken.new("api_key"))
 ```
 
 
+scrap / examples
+
+```ruby
+ds = Varese::API.new.dataset(name: "acs5", vintage: 2012)
+vars = ds.variables.by_concept_id["B01001"].select(&:estimate?)
+guids = vars.map(&:guid)
+
+base_options = { acs: 5, year: 2012 }
+tracts = ds.query(base_options.merge({ query: { get: guids.join(","), :for => "tract:*", :in => "state:06" }}))
+counties = ds.query(base_options.merge({ query: { get: guids.join(","), :for => "county:*", :in => "state:06" }}))
+# ds.query(base_options.merge({ query: { get: "B01001_049E", :for => "tract:*", :in => "state:06" }}))
+
+
+
+```
+
 
 
 ## Contributing
