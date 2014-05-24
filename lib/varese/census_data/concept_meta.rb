@@ -39,18 +39,19 @@ module Varese
       end
 
       def rollup(geography)
-        Rollup.build(data(geography)) do
+        Rollup.build(raw_data(geography)) do
 
         end
       end
 
-      private
-
-      def data(geography)
+      def raw_data(geography)
         DatasetQueryResponse.merge(*guids.each_slice(MAX_VARS_PER_REQUEST).map do |g|
           dataset.query({ get: g.join(",") }.merge(geography))
         end)
       end
+
+      private
+
 
       def guids
         query_variables.map(&:guid)
