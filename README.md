@@ -46,7 +46,9 @@ sex_by_age = dataset.concept("B01001")
 data       = sex_by_age.raw_data(:for => "county:*", :in => "state:06")
 ```
 
-
+**Please Note:** I am currently testing with the American Community Survey 5-year 2012 dataset.
+The formats of other datasets are **not consistent** and are not currently supported (however, they
+may work anyway! Give it a shot).
 
 ## Contributing
 

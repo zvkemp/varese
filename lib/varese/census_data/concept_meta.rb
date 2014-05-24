@@ -58,7 +58,12 @@ module Varese
       end
 
       def query_variables
-        variables.select(&:estimate?)
+        estimate = variables.select(&:estimate?)
+        if estimate.any?
+          estimate
+        else
+          variables
+        end
       end
     end
 
