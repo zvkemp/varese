@@ -50,7 +50,7 @@ data       = sex_by_age.raw_data(:for => "county:*", :in => "state:06")
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/varese/fork )
+1. Fork it ( http://github.com/zvkemp/varese/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
