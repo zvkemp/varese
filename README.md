@@ -44,7 +44,7 @@ scrap / examples
 dataset = Varese::API.new.dataset(name: "acs5", vintage: 2012)
 
 sex_by_age = dataset.concept("B01001")
-sex_by_age_data = sex_by_age.raw_data(for: "county:*", in: "state:06")
+sex_by_age_data = sex_by_age.raw_data(:for => "county:*", :in => "state:06")
 ```
 
 
