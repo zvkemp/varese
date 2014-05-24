@@ -4,6 +4,8 @@
 
 **This is currently an early-stage project and is not ready for production.** Contributions welcome.
 
+This product uses the [Census Bureau Data API](http://www.census.gov/developers/) but is not endorsed or certified by the Census Bureau.
+
 #### Varese?
 
 Yes: [http://en.wikipedia.org/wiki/Am%C3%A9riques](http://en.wikipedia.org/wiki/Am%C3%A9riques)
@@ -12,7 +14,7 @@ Yes: [http://en.wikipedia.org/wiki/Am%C3%A9riques](http://en.wikipedia.org/wiki/
 
 Add this line to your application's Gemfile:
 
-    gem 'varese'
+    gem 'varese', git: https://github.com/zvkemp/varese.git
 
 And then execute:
 
@@ -23,8 +25,6 @@ Or install it yourself as:
     $ gem install varese
 
 ## Usage
-
-* This is a very rough draft *
 
 By default, Varese will look for a `fixtures/api_key` file (ignored by git). An API key from the census can also be
 passed to the `AccessToken` constructor:
@@ -56,3 +56,4 @@ data       = sex_by_age.raw_data(:for => "county:*", :in => "state:06")
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+## License
