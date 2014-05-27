@@ -60,7 +60,7 @@ Example: B01001, Sex by Age, all counties in California
 # Note: the below process should be considerably improved.
 # To combine male & female results into a single set (still split by age),
 # map the desired attributes to a hash, grabbing the second attribute (age) only:
-attribute_map = sex_by_age.variables.each_with_object({}) do |variable, hash|
+attr_map = sex_by_age.variables.each_with_object({}) do |variable, hash|
   hash[variable.guid] = variable.attributes[1] if variable.attributes[1]
 end
 
@@ -92,8 +92,6 @@ data.group_by_attributes(attr_map)
 
 
 
-data.group_by_attributes(attribute_map)
-```
 
 ## Contributing
 
