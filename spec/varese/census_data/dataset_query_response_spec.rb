@@ -46,6 +46,45 @@ describe Varese::CensusData::DatasetQueryResponse do
       let(:counties_array){ counties.to_a }
       specify { counties_array.first.must_be_instance_of Hash }
     end
+
+    describe "group_by_attributes" do
+      let(:sex_by_age){ default_dataset.concept("B01001") }
+      let(:counties){ sex_by_age.raw_data({ :for => "county:*", :in => "state:06" }) }
+
+      let(:attribute_map) do
+        Hash[
+          guidsa.map {|guid| 
+            [guid, default_dataset.variables.by_guid[guid].attributes]
+          }.select {|guid, attrs| attrs.count == 2 }
+        ]
+      end
+
+      let(:ages_only) do
+        Hash[
+          guidsa.map {|guid| 
+            [guid, default_dataset.variables.by_guid[guid].attributes[1]]
+          }.select {|guid, attr| attr }
+        ]
+      end
+
+      let(:grouped){ counties.group_by_attributes(attribute_map) }
+      let(:ages){ counties.group_by_attributes(ages_only) }
+      let(:county_001){{ "state" => "06", "county" => "001", "tract" => nil }}
+      let(:alameda_all){ grouped[county_001] }
+      let(:alameda_ages){ ages[county_001] }
+
+      specify "the values are summed by attribute" do
+        alameda_ages["5 to 9 years"].must_equal(
+          alameda_all["Male:"]["5 to 9 years"] +
+          alameda_all["Female:"]["5 to 9 years"]
+        )
+
+        alameda_ages["15 to 17 years"].must_equal(
+          alameda_all["Male:"]["15 to 17 years"] +
+          alameda_all["Female:"]["15 to 17 years"]
+        )
+      end
+    end
   end
 end
 
@@ -84,7 +123,7 @@ describe Varese::CensusData::MergeQueryResponses do
     let(:key){ { "state" => "06", "county" => "001", "tract" => nil } }
     specify { grouped.must_be_instance_of Hash }
     specify { grouped.keys.first.must_equal(key) }
-    specify { grouped[key].values_at(*(1..6).map {|n| "VAR_#{n}" }).must_equal((1..6).map {|n| "#{n * 100}" }) }
+    specify { grouped[key].values_at(*(1..6).map {|n| "VAR_#{n}" }).must_equal((1..6).map {|n| n * 100 }) }
 
     let(:attribute_map){{
       "VAR_1" => ["Male", "18 to 24"],
@@ -99,8 +138,7 @@ describe Varese::CensusData::MergeQueryResponses do
     specify { grouped_2.must_be_instance_of Hash }
     specify { grouped_2[key].must_be_instance_of Hash }
     specify { grouped_2[key]["Male"].must_be_instance_of Hash }
-    specify { grouped_2[key]["Male"]["18 to 24"].must_equal "100" }
-    specify { grouped_2[key]["Female"]["32 to 38"].must_equal "600" }
-    specify { puts grouped_2.inspect }
+    specify { grouped_2[key]["Male"]["18 to 24"].must_equal 100 }
+    specify { grouped_2[key]["Female"]["32 to 38"].must_equal 600 }
   end
 end

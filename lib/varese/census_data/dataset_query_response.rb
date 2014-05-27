@@ -47,7 +47,8 @@ module Varese
         if keys.any?
           inject_value_into_hash(hash[key], value, *keys)
         else
-          hash[key] = value
+          # turn it into an integer value
+          hash[key] = ((v = hash[key]) == {} ? 0 : v) + Integer(value)
         end
       end
     end
