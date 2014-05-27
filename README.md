@@ -38,7 +38,7 @@ api = Varese::API.new(Varese::AccessToken.new("api_key"))
 ```
 
 
-scrap / examples
+#### scrap / examples
 
 ```ruby
 dataset    = Varese::API.new.dataset(name: "acs5", vintage: 2012)
@@ -49,6 +49,51 @@ data       = sex_by_age.raw_data(:for => "county:*", :in => "state:06")
 **Please Note:** I am currently testing with the American Community Survey 5-year 2012 dataset.
 The formats of other datasets are **not consistent** and are not currently supported (however, they
 may work anyway! Give it a shot).
+
+##### Combining a multi-variable concept into a single variable
+
+Example: B01001, Sex by Age, all counties in California
+
+```ruby
+# continuing from previous example...
+
+# Note: the below process should be considerably improved.
+# To combine male & female results into a single set (still split by age),
+# map the desired attributes to a hash, grabbing the second attribute (age) only:
+attribute_map = sex_by_age.variables.each_with_object({}) do |variable, hash|
+  hash[variable.guid] = variable.attributes[1] if variable.attributes[1]
+end
+
+# => {
+# "B01001_003E"=>"Under 5 years", 
+# "B01001_003M"=>"Under 5 years", 
+# "B01001_004E"=>"5 to 9 years", 
+# "B01001_004M"=>"5 to 9 years", 
+# "B01001_005E"=>"10 to 14 years", 
+# "B01001_005M"=>"10 to 14 years", 
+# "B01001_006E"=>"15 to 17 years" ...
+
+data.group_by_attributes(attr_map)
+# => { { "state" => "06", "county" => "001" } => { "Under 5 years" => 2048 } ...}
+```
+
+`nil` values will be skipped. If no mapping hash is given, it will simply map to the original
+keys (eg `"B001001_003E"`).
+
+The values for this attributes hash can also be arrays, in which case the grouping generated
+will be a nested hash. For example:
+
+```ruby
+attr_map = { "B01001_003E" => ["Male", "Under 5 years"] }
+data.group_by_attributes(attr_map) 
+# => { { "state" => "06", "county" => "001" } => { "Male" => { "Under 5 years" => 1023 }}  }
+```
+
+
+
+
+data.group_by_attributes(attribute_map)
+```
 
 ## Contributing
 
