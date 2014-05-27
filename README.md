@@ -74,7 +74,7 @@ end
 # "B01001_006E"=>"15 to 17 years" ...
 
 data.group_by_attributes(attr_map)
-# => { { "state" => "06", "county" => "001" } => { "Under 5 years" => 2048 } ...}
+# => { { "state" => "06", "county" => "001" } => { "Under 5 years" => 2048 ... } ...}
 ```
 
 `nil` values will be skipped. If no mapping hash is given, it will simply map to the original
@@ -86,7 +86,7 @@ will be a nested hash. For example:
 ```ruby
 attr_map = { "B01001_003E" => ["Male", "Under 5 years"] }
 data.group_by_attributes(attr_map) 
-# => { { "state" => "06", "county" => "001" } => { "Male" => { "Under 5 years" => 1023 }}  }
+# => { { "state" => "06", "county" => "001" } => { "Male" => { "Under 5 years" => 1023 }} ... }
 ```
 
 
