@@ -78,13 +78,17 @@ data.group_by_attributes(attr_map)
 ```
 
 `nil` values will be skipped. If no mapping hash is given, it will simply map to the original
-keys (eg `"B001001_003E"`).
+keys (eg "B001001_003E").
 
 The values for this attributes hash can also be arrays, in which case the grouping generated
 will be a nested hash. For example:
 
 ```ruby
-attr_map = { "B01001_003E" => ["Male", "Under 5 years"] }
+attr_map = sex_by_age.variables.each_with_object({}) do |variable, hash|
+  hash[variable.guid] = variable.attributes[0..1] 
+end.select {|_, v| v.count == 2 }
+# currently, all attribute arrays need to be the same length.
+
 data.group_by_attributes(attr_map) 
 # => { { "state" => "06", "county" => "001" } => { "Male" => { "Under 5 years" => 1023 }} ... }
 ```
