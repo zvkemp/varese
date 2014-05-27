@@ -78,4 +78,29 @@ describe Varese::CensusData::MergeQueryResponses do
     merged.body.first.must_equal %w[100 200 300 400 500 600 06 001]
     merged.body.last.must_equal  %w[1000 2000 3000 4000 5000 6000 06 002]
   end
+
+  describe "group_by_attributes" do
+    let(:grouped){ merged.group_by_attributes }
+    let(:key){ { "state" => "06", "county" => "001", "tract" => nil } }
+    specify { grouped.must_be_instance_of Hash }
+    specify { grouped.keys.first.must_equal(key) }
+    specify { grouped[key].values_at(*(1..6).map {|n| "VAR_#{n}" }).must_equal((1..6).map {|n| "#{n * 100}" }) }
+
+    let(:attribute_map){{
+      "VAR_1" => ["Male", "18 to 24"],
+      "VAR_2" => ["Female", "18 to 24"],
+      "VAR_3" => ["Male", "25 to 31"],
+      "VAR_4" => ["Female", "25 to 31"],
+      "VAR_5" => ["Male", "32 to 38"],
+      "VAR_6" => ["Female", "32 to 38"]
+    }}
+
+    let(:grouped_2){ merged.group_by_attributes(attribute_map) }
+    specify { grouped_2.must_be_instance_of Hash }
+    specify { grouped_2[key].must_be_instance_of Hash }
+    specify { grouped_2[key]["Male"].must_be_instance_of Hash }
+    specify { grouped_2[key]["Male"]["18 to 24"].must_equal "100" }
+    specify { grouped_2[key]["Female"]["32 to 38"].must_equal "600" }
+    specify { puts grouped_2.inspect }
+  end
 end

@@ -16,11 +16,40 @@ module Varese
       def to_a
         body.map {|row| Hash[header.zip(row)] }
       end
+
+      def group_by_attributes(attribute_map = Hash.new {|_, k| k })
+        to_a.each_with_object({}) do |row, hash|
+          hash[geography_hash_for(row)] = map_row_to_attributes(row, attribute_map)
+        end
+      end
       
       def rollup(*attributes, options)
         Rollup.new(self, *attributes, options)
       end
 
+      private
+
+      # TODO: more attributes!
+      GEOGRAPHIC_ATTRIBUTES = %w[state county tract]
+
+      def geography_hash_for(row)
+        Hash[GEOGRAPHIC_ATTRIBUTES.zip(row.values_at(*GEOGRAPHIC_ATTRIBUTES))]
+      end
+
+      def map_row_to_attributes(row, attribute_map)
+        row.each_with_object(Hash.new {|h, k| h[k] = Hash.new(&h.default_proc) }) do |(k, v), hash|
+          inject_value_into_hash(hash, v, *Array(attribute_map[k]))
+        end
+      end
+
+      def inject_value_into_hash(hash, value, key = nil, *keys)
+        return unless key
+        if keys.any?
+          inject_value_into_hash(hash[key], value, *keys)
+        else
+          hash[key] = value
+        end
+      end
     end
 
     # There is a limit to how many variables can be fetched in a single request.
