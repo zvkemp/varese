@@ -14,6 +14,7 @@ describe Varese::CensusData::ConceptMeta do
   end
 
   specify "state of california" do
+    skip
     puts concept.rollup({ for: "state:06" }){|_, age| age }.inspect
   end
 end
