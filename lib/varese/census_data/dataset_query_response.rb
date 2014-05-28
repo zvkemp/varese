@@ -33,7 +33,8 @@ module Varese
 
     end
 
-
+    # Used by DatasetQueryResponse#group_by_attributes to roll raw response tables
+    # into hashes. Variables are summed where appropriate.
     class GroupQueryResponse
       attr_reader :response, :attr_map
       def initialize(response, attr_map)
