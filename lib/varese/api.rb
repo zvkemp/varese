@@ -12,9 +12,6 @@ module Varese
     end
 
     def get(url)
-      puts "========================="
-      puts "#{url}".inspect
-      puts "========================="
       open(URI.parse(url)).read
     end
 
