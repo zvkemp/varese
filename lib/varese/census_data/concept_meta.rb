@@ -50,6 +50,10 @@ module Varese
         end)
       end
 
+      def inspect
+        "#<Varese::CensusData::ConceptMeta #{variables.first.concept} (#{variables.count} variables)>"
+      end
+
       private
 
 
