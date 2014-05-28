@@ -1,5 +1,8 @@
 module Varese
   module CensusData
+    # TODO: more attributes!
+    GEOGRAPHIC_ATTRIBUTES = %w[state county tract]
+
     class DatasetQueryResponse
 
       class << self
@@ -18,9 +21,7 @@ module Varese
       end
 
       def group_by_attributes(attribute_map = Hash.new {|_, k| k })
-        to_a.each_with_object({}) do |row, hash|
-          hash[geography_hash_for(row)] = map_row_to_attributes(row, attribute_map)
-        end
+        GroupQueryResponse.new(self, attribute_map).to_hash
       end
       
       def rollup(*attributes, options)
@@ -29,16 +30,32 @@ module Varese
 
       private
 
-      # TODO: more attributes!
-      GEOGRAPHIC_ATTRIBUTES = %w[state county tract]
+
+    end
+
+
+    class GroupQueryResponse
+      attr_reader :response, :attr_map
+      def initialize(response, attr_map)
+        @response = response
+        @attr_map = attr_map
+      end
+
+      def to_hash
+        response.to_a.each_with_object({}) do |row, hash|
+          hash[geography_hash_for(row)] = map_row_to_attributes(row)
+        end
+      end
+
+      private
 
       def geography_hash_for(row)
         Hash[GEOGRAPHIC_ATTRIBUTES.zip(row.values_at(*GEOGRAPHIC_ATTRIBUTES))]
       end
 
-      def map_row_to_attributes(row, attribute_map)
-        row.each_with_object(Hash.new {|h, k| h[k] = Hash.new(&h.default_proc) }) do |(k, v), hash|
-          inject_value_into_hash(hash, v, *Array(attribute_map[k]))
+      def map_row_to_attributes(row)
+        row.each_with_object(defaulting_hash) do |(k, v), hash|
+          inject_value_into_hash(hash, v, *Array(attr_map[k]))
         end
       end
 
@@ -50,6 +67,10 @@ module Varese
           # turn it into an integer value
           hash[key] = ((v = hash[key]) == {} ? 0 : v) + Integer(value)
         end
+      end
+
+      def defaulting_hash
+        Hash.new {|h, k| h[k] = Hash.new(&h.default_proc) }
       end
     end
 

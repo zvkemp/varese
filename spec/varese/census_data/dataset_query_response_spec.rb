@@ -55,29 +55,36 @@ describe Varese::CensusData::DatasetQueryResponse do
         Hash[
           guidsa.map {|guid| 
             [guid, default_dataset.variables.by_guid[guid].attributes]
-          }.select {|guid, attrs| attrs.count == 2 }
-        ]
+          }.select {|guid, attrs| attrs.count == 2 } ]
       end
 
       let(:ages_only) do
         Hash[
           guidsa.map {|guid| 
             [guid, default_dataset.variables.by_guid[guid].attributes[1]]
-          }.select {|guid, attr| attr }
-        ]
+          }.select {|guid, attr| attr } ]
+      end
+
+      let(:reversed_attrs) do
+        Hash[
+          guidsa.map {|guid|
+            [guid, default_dataset.variables.by_guid[guid].attributes.reverse]
+          }.select {|guid, attrs| attrs.count == 2 } ]
       end
 
       let(:grouped){ counties.group_by_attributes(attribute_map) }
       let(:ages){ counties.group_by_attributes(ages_only) }
+      let(:reversed){ counties.group_by_attributes(reversed_attrs) }
       let(:county_001){{ "state" => "06", "county" => "001", "tract" => nil }}
       let(:alameda_all){ grouped[county_001] }
       let(:alameda_ages){ ages[county_001] }
+      let(:alameda_reversed){ reversed[county_001] }
 
       specify "the values are summed by attribute" do
-        alameda_ages["5 to 9 years"].must_equal(
-          alameda_all["Male:"]["5 to 9 years"] +
-          alameda_all["Female:"]["5 to 9 years"]
-        )
+        alameda_ages["5 to 9 years"].tap do |pop|
+          pop.must_equal(alameda_all["Male:"]["5 to 9 years"] + alameda_all["Female:"]["5 to 9 years"])
+          pop.must_equal(alameda_reversed["5 to 9 years"]["Male:"] + alameda_reversed["5 to 9 years"]["Female:"])
+        end
 
         alameda_ages["15 to 17 years"].must_equal(
           alameda_all["Male:"]["15 to 17 years"] +
@@ -125,20 +132,42 @@ describe Varese::CensusData::MergeQueryResponses do
     specify { grouped.keys.first.must_equal(key) }
     specify { grouped[key].values_at(*(1..6).map {|n| "VAR_#{n}" }).must_equal((1..6).map {|n| n * 100 }) }
 
-    let(:attribute_map){{
-      "VAR_1" => ["Male", "18 to 24"],
-      "VAR_2" => ["Female", "18 to 24"],
-      "VAR_3" => ["Male", "25 to 31"],
-      "VAR_4" => ["Female", "25 to 31"],
-      "VAR_5" => ["Male", "32 to 38"],
-      "VAR_6" => ["Female", "32 to 38"]
-    }}
+    describe "attributes in original order" do
 
-    let(:grouped_2){ merged.group_by_attributes(attribute_map) }
-    specify { grouped_2.must_be_instance_of Hash }
-    specify { grouped_2[key].must_be_instance_of Hash }
-    specify { grouped_2[key]["Male"].must_be_instance_of Hash }
-    specify { grouped_2[key]["Male"]["18 to 24"].must_equal 100 }
-    specify { grouped_2[key]["Female"]["32 to 38"].must_equal 600 }
+      let(:attribute_map){{
+        "VAR_1" => ["Male", "18 to 24"],
+        "VAR_2" => ["Female", "18 to 24"],
+        "VAR_3" => ["Male", "25 to 31"],
+        "VAR_4" => ["Female", "25 to 31"],
+        "VAR_5" => ["Male", "32 to 38"],
+        "VAR_6" => ["Female", "32 to 38"]
+      }}
+
+      let(:grouped_2){ merged.group_by_attributes(attribute_map) }
+      specify { grouped_2.must_be_instance_of Hash }
+      specify { grouped_2[key].must_be_instance_of Hash }
+      specify { grouped_2[key]["Male"].must_be_instance_of Hash }
+      specify { grouped_2[key]["Male"]["18 to 24"].must_equal 100 }
+      specify { grouped_2[key]["Female"]["32 to 38"].must_equal 600 }
+    end
+
+    describe "attributes in custom order" do
+      let(:attribute_map){{
+        "VAR_1" => ["18 to 24", "Male"],
+        "VAR_2" => ["18 to 24", "Female"],
+        "VAR_3" => ["25 to 31", "Male"],
+        "VAR_4" => ["25 to 31", "Female"],
+        "VAR_5" => ["32 to 38", "Male"],
+        "VAR_6" => ["32 to 38", "Female"]
+      }}
+
+      let(:grouped_2){ merged.group_by_attributes(attribute_map) }
+
+      specify { grouped_2.must_be_instance_of Hash }
+      specify { grouped_2[key].must_be_instance_of Hash }
+      specify { grouped_2[key]["18 to 24"]["Male"].must_equal 100 }
+      specify { grouped_2[key]["32 to 38"]["Female"].must_equal 600 }
+
+    end
   end
 end
