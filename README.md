@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/zvkemp/varese.png)](https://codeclimate.com/github/zvkemp/varese)
+
 # Varese
 
 ### A Ruby interface to the US Census API.
