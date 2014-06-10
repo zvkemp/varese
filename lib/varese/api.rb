@@ -19,7 +19,7 @@ module Varese
 
     # Looks for a file at fixtures/api_key
     def default_key
-      File.read('fixtures/api_key').strip
+      ENV.fetch("VARESE_KEY"){ File.read('fixtures/api_key').strip }
     end
   end
 
