@@ -68,9 +68,15 @@ module Varese
       end
 
       def concept(concept_name)
-        ConceptMeta.new(variables.by_concept_id.fetch(concept_name) {
+        ConceptMeta.new(concept_name, variables.by_concept_id.fetch(concept_name) {
           raise ArgumentError, "Concept #{concept_name} not found"
         }, self)
+      end
+
+      def concepts
+        variables.by_concept_id.map do |concept_id, variables| 
+          ConceptMeta.new(concept_id, variables, self)
+        end
       end
 
       private

@@ -26,11 +26,12 @@ module Varese
     #   automatically download data using the referenced dataset.
     #
     class ConceptMeta < Meta
-      attr_reader :variables, :dataset
+      attr_reader :variables, :dataset, :concept_id
 
-      def initialize(variables, dataset)
-        @variables = variables.sort_by(&:guid)
-        @dataset = dataset
+      def initialize(concept_id, variables, dataset)
+        @concept_id = concept_id
+        @variables  = variables.sort_by(&:guid)
+        @dataset    = dataset
       end
 
       # by size
