@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Varese::VERSION
   spec.authors       = ["zvkemp"]
   spec.email         = ["zvkemp@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
+  spec.summary       = %q{This product uses the Census Bureau Data API but is not endorsed or certified by the Census Bureau.}
   spec.description   = %q{TODO: Write a longer description. Optional.}
   spec.homepage      = ""
   spec.license       = "MIT"
@@ -20,4 +20,11 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
+
+  spec.add_development_dependency 'guard'
+  spec.add_development_dependency 'guard-minitest'
+  spec.add_development_dependency 'minitest-reporters'
+  spec.add_development_dependency 'vcr'
+  spec.add_development_dependency 'webmock'
+  spec.add_development_dependency 'rr'
 end

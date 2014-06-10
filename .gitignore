@@ -15,3 +15,7 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+api_key*
+*DS_Store
+fixtures/cassettes/*
+fixtures/*csv
