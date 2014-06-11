@@ -36,8 +36,8 @@ module Varese
       # attr_map = {
       #   "B01001_003E" => { 268 => 1, 270 => 2 }
       #
-      def flatten_by_attributes(attribute_map) 
-        FlatQueryResponse.new(self, attribute_map).to_a
+      def flatten_by_attributes(attribute_map, count_key = :count)
+        FlatQueryResponse.new(self, attribute_map).to_a(count_key)
       end
       
       def rollup(*attributes, options)
@@ -58,12 +58,11 @@ module Varese
     end
 
     class FlatQueryResponse < QueryResponseRollup
-      def to_a
+      def to_a(count_key = :count)
         response.to_a.each_with_object({}) do |row, hash|
           row.each do |var, count_str|
-            key = attr_map[var]
-            if key 
-              hash[key] ||= key.merge({ count: 0 })
+            if (key = attr_map[var])
+              hash[key] ||= key.merge({ count_key => 0 })
               hash[key][:count] += Integer(count_str)
             end
           end
