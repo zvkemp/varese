@@ -20,8 +20,24 @@ module Varese
         body.map {|row| Hash[header.zip(row)] }
       end
 
+      # generates a nested hash based on the attribute map
+      #   attr_map = {
+      #     "B01001_003E"=>["male", "Under 5 years"], 
+      #     "B01001_003M"=>["female", "Under 5 years"],
+      #     ...
+      #   }
+      # data.group_by_attributes(attr_map)
+      # # => {{ "state" => "06", "county" => "001" } => { "male" => { "under 5 years" => 2048 } ... }
       def group_by_attributes(attribute_map = Hash.new {|_, k| k })
         GroupQueryResponse.new(self, attribute_map).to_hash
+      end
+
+      # generates a flat mapped array of hashes
+      # attr_map = {
+      #   "B01001_003E" => { 268 => 1, 270 => 2 }
+      #
+      def flatten_by_attributes(attribute_map) 
+        FlatQueryResponse.new(self, attribute_map).to_a
       end
       
       def rollup(*attributes, options)
@@ -33,15 +49,31 @@ module Varese
 
     end
 
-    # Used by DatasetQueryResponse#group_by_attributes to roll raw response tables
-    # into hashes. Variables are summed where appropriate.
-    class GroupQueryResponse
+    class QueryResponseRollup
       attr_reader :response, :attr_map
       def initialize(response, attr_map)
         @response = response
         @attr_map = attr_map
       end
+    end
 
+    class FlatQueryResponse < QueryResponseRollup
+      def to_a
+        response.to_a.each_with_object({}) do |row, hash|
+          row.each do |var, count_str|
+            key = attr_map[var]
+            if key 
+              hash[key] ||= key.merge({ count: 0 })
+              hash[key][:count] += Integer(count_str)
+            end
+          end
+        end.values
+      end
+    end
+
+    # Used by DatasetQueryResponse#group_by_attributes to roll raw response tables
+    # into hashes. Variables are summed where appropriate.
+    class GroupQueryResponse < QueryResponseRollup
       def to_hash
         response.to_a.each_with_object({}) do |row, hash|
           hash[geography_hash_for(row)] = map_row_to_attributes(row)
