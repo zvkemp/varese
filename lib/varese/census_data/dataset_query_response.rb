@@ -63,7 +63,7 @@ module Varese
           row.each do |var, count_str|
             if (key = attr_map[var])
               hash[key] ||= key.merge({ count_key => 0 })
-              hash[key][:count] += Integer(count_str)
+              hash[key][count_key] += Integer(count_str)
             end
           end
         end.values
