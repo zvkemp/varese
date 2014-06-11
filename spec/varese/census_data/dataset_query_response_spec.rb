@@ -125,6 +125,39 @@ describe Varese::CensusData::MergeQueryResponses do
     merged.body.last.must_equal  %w[1000 2000 3000 4000 5000 6000 06 002]
   end
 
+  describe "flatten_by_attributes" do
+    let(:attribute_map){{
+      "VAR_1" => { 268 => 2, 270 => 1 },
+      "VAR_2" => { 268 => 1, 270 => 1 },
+      "VAR_3" => { 268 => 2, 270 => 2 },
+      "VAR_4" => { 268 => 1, 270 => 2 },
+      "VAR_5" => { 268 => 2, 270 => 3 },
+      "VAR_6" => { 268 => 1, 270 => 3 }
+    }}
+    let(:flattened){ merged.flatten_by_attributes(attribute_map) }
+    specify { flattened.must_be_instance_of Array }
+
+    it "should have one hash for each unique combination" do
+      flattened.count {|m| m.is_a? Hash }.must_equal 6
+    end
+
+    let(:expectation){[
+      { 268 => 2, 270 => 1, count: 1100 },
+      { 268 => 1, 270 => 1, count: 2200 },
+      { 268 => 2, 270 => 2, count: 3300 },
+      { 268 => 1, 270 => 2, count: 4400 },
+      { 268 => 2, 270 => 3, count: 5500 },
+      { 268 => 1, 270 => 3, count: 6600 }
+    ]}
+
+    it("should count granularly"){ flattened.must_equal expectation }
+
+    specify do
+      skip # should this even be permitted? (ie, without specifying a attribute map?)
+      merged.flatten_by_attributes.to_a.must_equal []
+    end
+  end
+
   describe "group_by_attributes" do
     let(:grouped){ merged.group_by_attributes }
     let(:key){ { "state" => "06", "county" => "001", "tract" => nil } }
