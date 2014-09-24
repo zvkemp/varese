@@ -39,6 +39,10 @@ module Varese
         variables.map(&:attributes).flatten.uniq
       end
 
+      def variable(variable_guid)
+        variables_hash[variable_guid]
+      end
+
       def rollup(geography)
         Rollup.build(raw_data(geography)) do
 
@@ -56,6 +60,12 @@ module Varese
       end
 
       private
+
+      def variables_hash
+        @variables_hash ||= {}.tap do |hash|
+          variables.each { |var| hash[var.guid] = var }
+        end
+      end
 
 
       def guids
