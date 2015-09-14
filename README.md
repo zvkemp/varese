@@ -16,7 +16,7 @@ Yes: [http://en.wikipedia.org/wiki/Am%C3%A9riques](http://en.wikipedia.org/wiki/
 
 Add this line to your application's Gemfile:
 
-    gem 'varese', git: https://github.com/zvkemp/varese.git
+    gem 'varese', git: 'https://github.com/zvkemp/varese.git'
 
 And then execute:
 
